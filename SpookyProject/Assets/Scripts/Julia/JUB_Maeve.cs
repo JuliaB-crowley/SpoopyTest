@@ -2,8 +2,10 @@ using JetBrains.Annotations;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 namespace character
 {
@@ -24,7 +26,8 @@ namespace character
 
 
         [SerializeField]
-        bool isInRoll,  isInRecoil, isInImmunity, isInRecover;
+        bool isInRoll,  isInRecoil, isInImmunity, isInRecover, isPushingObject;
+        public LayerMask pushableObjects, interactibleObjects;
         public bool isCrouching;
         [SerializeField]
         bool attackMaintained, isInBuildup, isInAttack;
@@ -38,6 +41,10 @@ namespace character
         public bool ennemyWasHitOnce;
         List<Collider2D> ennemiesHitLastTime = new List<Collider2D>();
 
+        //pousser des objets
+        Collider2D[] allPushableInRange, allInteractibleInRange;
+        public float interactAndPushableRange;
+
         // Start is called before the first frame update
         void Start()
         {
@@ -45,11 +52,13 @@ namespace character
             controller = new Controller();
             controller.Enable();
 
-            AttackProfile quickAttack = new AttackProfile(1, new Vector2(1, 1), 0.1f, 0.2f);
-            AttackProfile heavyAttack = new AttackProfile(3, new Vector2(2, 1), 0, 0.8f);
+            AttackProfile quickAttack = new AttackProfile(1, new Vector2(1, 1), 0.1f, 0.2f, "quick");
+            AttackProfile heavyAttack = new AttackProfile(3, new Vector2(2, 1), 0, 0.8f, "heavy");
 
             controller.MainController.Roll.performed += ctx => Roll();
             controller.MainController.Crouch.performed += ctx => Crouch();
+            controller.MainController.Push.performed += ctx => PushObjects();
+            controller.MainController.Interact.performed += ctx => Interact();
             //controller.MainController.Crouch.performed += ctx => isCrouching = !isCrouching;
             controller.MainController.Attack.performed += ctx => Attack(quickAttack);// Attack();
             controller.MainController.HeavyAttack.performed += ctx => Attack(heavyAttack);
@@ -59,6 +68,8 @@ namespace character
         void Update()
         {
             Inputs();
+            InteractSphere();
+            PushableSphere();
             Move();
         }
 
@@ -109,7 +120,7 @@ namespace character
         {
             if (!isInRoll)
             {
-                if (!isCrouching)
+                if (!isCrouching && !isPushingObject)
                 {
                     targetSpeed = Vector2.ClampMagnitude(lStick, 1) * speed;
                 }
@@ -211,7 +222,7 @@ namespace character
         void Attack(AttackProfile attackProfile)
         {
             Vector2 attackVector = Vector2.zero;
-            if (!isInRecover && !isInBuildup && !isInRoll && !isCrouching)
+            if (!isInRecover && !isInBuildup && !isInRoll && !isCrouching && !isPushingObject)
             {
                 ennemiesHitLastTime.Clear();
 
@@ -236,6 +247,8 @@ namespace character
                 isInBuildup = true;
                 attackProfile.atkVector = attackVector;
                 StartCoroutine(Buildup(attackProfile));
+
+                Debug.Log(attackProfile.atkName);
             }
         }
 
@@ -312,16 +325,18 @@ namespace character
 
         class AttackProfile
         {
-            public AttackProfile(float damage, Vector2 zone, float buildup, float recover)
+            public AttackProfile(float damage, Vector2 zone, float buildup, float recover, string name)
             {
                 atkDamage = damage;
                 atkZone = zone;
                 atkRecover = recover;
                 atkBuildup = buildup;
+                atkName = name;
             }
 
             public float atkDamage, atkRecover, atkBuildup;
             public Vector2 atkZone, atkVector;
+            public string atkName;
 
             public void ChangeDamage(float changeAmount)
             {
@@ -332,8 +347,98 @@ namespace character
             {
                 atkDamage = newDamageValue;
             }
+
         }
 
+        void InteractSphere()
+        {
+            allInteractibleInRange = Physics2D.OverlapCircleAll(transform.position, interactAndPushableRange, interactibleObjects);
+            foreach(Collider2D interactible in allInteractibleInRange)
+            {
+                interactible.GetComponent<JUB_InteractibleBehavior>().interactible = true;
+            }
+        }
+
+        void Interact()
+        {
+            if(!allInteractibleInRange.Count().Equals(0))
+            {
+                if(allInteractibleInRange.Count().Equals(1))
+                {
+                    if(allInteractibleInRange.Count().Equals(1))
+                    {
+                        allInteractibleInRange[0].GetComponent<JUB_InteractibleBehavior>().interacted = true;
+                    }
+                    else
+                    {
+                        float smallestAngle = Mathf.Infinity;
+                        Collider2D interactibleTarget = allInteractibleInRange[0];
+                        foreach(Collider2D interactible in allInteractibleInRange)
+                        {
+                            Vector2 playerToInteractible = interactible.transform.position - transform.position;
+                            float interactibleAngle = Vector2.Angle(lastDirection, playerToInteractible);
+                            if(interactibleAngle < smallestAngle)
+                            {
+                                interactibleTarget = interactible;
+                                smallestAngle = interactibleAngle;
+                            }
+                        }
+                        interactibleTarget.GetComponent<JUB_InteractibleBehavior>().interacted = true;
+                    }
+                }
+            }
+        }
+
+        void PushableSphere()
+        {
+            allPushableInRange = Physics2D.OverlapCircleAll(transform.position, interactAndPushableRange, pushableObjects);
+            foreach(Collider2D pushable in allPushableInRange)
+            {
+                pushable.GetComponent<JUB_PushableBehavior>().pushable = true;
+            }
+        }
+        void PushObjects()
+        {
+            isPushingObject = !isPushingObject;
+            if(!allPushableInRange.Count().Equals(0) && isPushingObject)
+            {
+                if(allPushableInRange.Count().Equals(1))
+                {
+                    allPushableInRange[0].GetComponent<JUB_PushableBehavior>().pushed = true;
+                }
+                else
+                {
+                    float smallestAngle = Mathf.Infinity;
+                    Collider2D pushableTarget = allPushableInRange[0];
+                    foreach (Collider2D pushable in allPushableInRange)
+                    {
+                        Vector2 playerToPushable = pushable.transform.position - transform.position;
+                        float interactibleAngle = Vector2.Angle(lastDirection, playerToPushable);
+                        if(interactibleAngle < smallestAngle)
+                        {
+                            pushableTarget = pushable;
+                            smallestAngle = interactibleAngle;
+                        }
+                    }
+                    pushableTarget.GetComponent<JUB_PushableBehavior>().pushed = true;
+                }
+            }
+            else if (isPushingObject == false)
+            {
+                foreach(Collider2D pushable in allPushableInRange)
+                {
+                    pushable.GetComponent<JUB_PushableBehavior>().pushed = false;
+                }
+            }
+
+            //inverser le booléen
+
+            //si isPush = true mettre l'objet en parent
+            //agrandir le box collider du joueur pour qu'il s'ajoute celui de l'objet
+
+            //si !isPush = enlever le parent
+            //reduire le collider du joueur à son état d'origine
+        }
     }
 
 }

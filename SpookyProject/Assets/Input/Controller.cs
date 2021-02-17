@@ -73,6 +73,22 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Push"",
+                    ""type"": ""Button"",
+                    ""id"": ""b8da1420-fee3-41f6-977e-cda69da81ff6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""5003cda7-c65b-4947-8adf-000f06b8c3a8"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -273,6 +289,50 @@ public class @Controller : IInputActionCollection, IDisposable
                     ""action"": ""Hint"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""db71c7df-5d52-4b82-988f-b851425157f4"",
+                    ""path"": ""<Keyboard>/t"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Push"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e608458-1697-4683-a0f6-78e7b47ed1f5"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Push"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bd39586e-fef8-4405-931a-71110795743f"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eba4fd98-e14b-4cf1-945c-98aa8b02bd08"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -288,6 +348,8 @@ public class @Controller : IInputActionCollection, IDisposable
         m_MainController_Crouch = m_MainController.FindAction("Crouch", throwIfNotFound: true);
         m_MainController_Flash = m_MainController.FindAction("Flash", throwIfNotFound: true);
         m_MainController_Hint = m_MainController.FindAction("Hint", throwIfNotFound: true);
+        m_MainController_Push = m_MainController.FindAction("Push", throwIfNotFound: true);
+        m_MainController_Interact = m_MainController.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -344,6 +406,8 @@ public class @Controller : IInputActionCollection, IDisposable
     private readonly InputAction m_MainController_Crouch;
     private readonly InputAction m_MainController_Flash;
     private readonly InputAction m_MainController_Hint;
+    private readonly InputAction m_MainController_Push;
+    private readonly InputAction m_MainController_Interact;
     public struct MainControllerActions
     {
         private @Controller m_Wrapper;
@@ -355,6 +419,8 @@ public class @Controller : IInputActionCollection, IDisposable
         public InputAction @Crouch => m_Wrapper.m_MainController_Crouch;
         public InputAction @Flash => m_Wrapper.m_MainController_Flash;
         public InputAction @Hint => m_Wrapper.m_MainController_Hint;
+        public InputAction @Push => m_Wrapper.m_MainController_Push;
+        public InputAction @Interact => m_Wrapper.m_MainController_Interact;
         public InputActionMap Get() { return m_Wrapper.m_MainController; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -385,6 +451,12 @@ public class @Controller : IInputActionCollection, IDisposable
                 @Hint.started -= m_Wrapper.m_MainControllerActionsCallbackInterface.OnHint;
                 @Hint.performed -= m_Wrapper.m_MainControllerActionsCallbackInterface.OnHint;
                 @Hint.canceled -= m_Wrapper.m_MainControllerActionsCallbackInterface.OnHint;
+                @Push.started -= m_Wrapper.m_MainControllerActionsCallbackInterface.OnPush;
+                @Push.performed -= m_Wrapper.m_MainControllerActionsCallbackInterface.OnPush;
+                @Push.canceled -= m_Wrapper.m_MainControllerActionsCallbackInterface.OnPush;
+                @Interact.started -= m_Wrapper.m_MainControllerActionsCallbackInterface.OnInteract;
+                @Interact.performed -= m_Wrapper.m_MainControllerActionsCallbackInterface.OnInteract;
+                @Interact.canceled -= m_Wrapper.m_MainControllerActionsCallbackInterface.OnInteract;
             }
             m_Wrapper.m_MainControllerActionsCallbackInterface = instance;
             if (instance != null)
@@ -410,6 +482,12 @@ public class @Controller : IInputActionCollection, IDisposable
                 @Hint.started += instance.OnHint;
                 @Hint.performed += instance.OnHint;
                 @Hint.canceled += instance.OnHint;
+                @Push.started += instance.OnPush;
+                @Push.performed += instance.OnPush;
+                @Push.canceled += instance.OnPush;
+                @Interact.started += instance.OnInteract;
+                @Interact.performed += instance.OnInteract;
+                @Interact.canceled += instance.OnInteract;
             }
         }
     }
@@ -423,5 +501,7 @@ public class @Controller : IInputActionCollection, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnFlash(InputAction.CallbackContext context);
         void OnHint(InputAction.CallbackContext context);
+        void OnPush(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }
