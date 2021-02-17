@@ -10,7 +10,7 @@ public class TestTorche : MonoBehaviour
 
     //C'est Pierre qui à fait ça
     public UnityEvent wasUnlit = new UnityEvent();
-    List<Collider> litObjects = new List<Collider>();
+    List<Collider2D> litObjects = new List<Collider2D>();
 
     private void Start()
     {
@@ -21,7 +21,7 @@ public class TestTorche : MonoBehaviour
         if (isLit)
         {
             torcheMaterial.color = Color.red;
-            GetComponent<SphereCollider>().radius = 2;
+            GetComponent<CircleCollider2D>().radius = 2;
         }
         else
         {
@@ -33,8 +33,8 @@ public class TestTorche : MonoBehaviour
     //Cette méthode fau=it que quand la torche s'éteint lorsqu'un object est en train d'intéragir avec, cet objet s'étein aussi
     void UnlightEverything()
     {
-        GetComponent<SphereCollider>().radius = 0;
-        foreach (Collider col in litObjects)
+        GetComponent<CircleCollider2D>().radius = 0;
+        foreach (Collider2D col in litObjects)
         {
             col.GetComponent<TestInvisibleInk>().mesh.enabled = false;
         }
@@ -42,27 +42,27 @@ public class TestTorche : MonoBehaviour
     }
 
     //Contrairement au flash qui dit à l'object détécté à s'allumer, c'est la torche elle même qui vas révéler les objets invisibles
-    private void OnTriggerEnter(Collider other)
+    void OnTriggerEnter2D(Collider2D collision)
     {
         if (isLit)
         {
-            litObjects.Add(other);
-            if (other.GetComponent<TestInvisibleInk>())
+            litObjects.Add(collision);
+            if (collision.GetComponent<TestInvisibleInk>())
             {
-                other.GetComponent<TestInvisibleInk>().mesh.enabled = true;
+                collision.GetComponent<TestInvisibleInk>().mesh.enabled = true;
             }
         }
     }
 
     //La torche étein l'object en contact lorsqu'il sors de la zone iluminé
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D collision)
     {
         if (isLit)
         {
-            litObjects.Remove(other);
-            if (other.GetComponent<TestInvisibleInk>())
+            litObjects.Remove(collision);
+            if (collision.GetComponent<TestInvisibleInk>())
             {
-                other.GetComponent<TestInvisibleInk>().mesh.enabled = false;
+                collision.GetComponent<TestInvisibleInk>().mesh.enabled = false;
             }
         }
     }

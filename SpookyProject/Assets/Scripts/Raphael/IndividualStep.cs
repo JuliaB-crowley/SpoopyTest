@@ -34,9 +34,9 @@ public class IndividualStep : MonoBehaviour
     }
 
     //Détecte le joueur
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.CompareTag("Player") && !hasBeenStepped && !puzzleMaster.puzzleHasBeenCompleted)
+        if (collision.CompareTag("Player") && !hasBeenStepped && !puzzleMaster.puzzleHasBeenCompleted)
         {
             hasBeenStepped = true;
             StepCheck();
@@ -56,4 +56,5 @@ public class IndividualStep : MonoBehaviour
             puzzleMaster.currentSteps ++;
         }
     }
+    
 }

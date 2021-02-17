@@ -30,20 +30,20 @@ public class StepPuzzleMaster : MonoBehaviour
         }
     }
 
+
     //Check si le joueur est présent
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             playesIsPresent = true;
         }
-        
     }
 
     //Check si le joueur n'est plus présent
-    private void OnTriggerExit(Collider other)
+    private void OnTriggerExit2D(Collider2D collision)
     {
-        if (other.CompareTag("Player"))
+        if (collision.CompareTag("Player"))
         {
             StartCoroutine(ResetTiles());
         }
@@ -55,5 +55,5 @@ public class StepPuzzleMaster : MonoBehaviour
         playesIsPresent = false;
         yield return new WaitForSeconds(0.02f);
         playerHasFailed = false;
-    }
+    }   
 }

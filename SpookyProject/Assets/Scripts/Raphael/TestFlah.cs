@@ -9,6 +9,7 @@ public class TestFlah : MonoBehaviour
     public float flashRange;
     [SerializeField] LayerMask affectedLayers;
     public bool hasFlashed = false;
+    public Vector2 flashPosition2D;
 
     void Start()
     {
@@ -17,8 +18,23 @@ public class TestFlah : MonoBehaviour
 
     void Update()
     {
-        Collider[] objects = Physics.OverlapSphere(flashTransform.position, flashRange, affectedLayers);
+        flashPosition2D = new Vector2(flashTransform.position.x, flashTransform.position.y);
 
+        
+        Collider2D[] collider2Ds = Physics2D.OverlapCircleAll(flashPosition2D, flashRange);
+        if (hasFlashed)
+        {
+            foreach (Collider2D col in collider2Ds)
+            {
+                if (col.GetComponent<TestInvisibleInk>())
+                {
+                    col.GetComponent<TestInvisibleInk>().hasBeenFlashed = true;
+                }
+            }
+            hasFlashed = false;
+        }
+
+        /*Collider[] objects = Physics.OverlapSphere(flashTransform.position, flashRange, affectedLayers);
         if (hasFlashed)
         {
             foreach (Collider obj in objects)
@@ -29,7 +45,7 @@ public class TestFlah : MonoBehaviour
                 }
             }
             hasFlashed = false;
-        }        
+        }*/        
     }
 
     private void OnDrawGizmosSelected()
