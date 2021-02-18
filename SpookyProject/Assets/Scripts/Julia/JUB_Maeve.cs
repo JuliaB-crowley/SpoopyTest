@@ -321,6 +321,9 @@ namespace character
             Gizmos.DrawLine(transform.position, transform.position + attackLength);
             attackLength = Quaternion.Euler(0, 0, -2 * heavyAtkZone.y) * attackLength;
             Gizmos.DrawLine(transform.position, transform.position + attackLength);
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, interactAndPushableRange);
         }
 
         class AttackProfile
@@ -405,6 +408,7 @@ namespace character
                 if(allPushableInRange.Count().Equals(1))
                 {
                     allPushableInRange[0].GetComponent<JUB_PushableBehavior>().pushed = true;
+                    allPushableInRange[0].GetComponent<JUB_PushableBehavior>().ManagePushing();
                 }
                 else
                 {
@@ -421,6 +425,7 @@ namespace character
                         }
                     }
                     pushableTarget.GetComponent<JUB_PushableBehavior>().pushed = true;
+                    pushableTarget.GetComponent<JUB_PushableBehavior>().ManagePushing();
                 }
             }
             else if (isPushingObject == false)
@@ -428,8 +433,10 @@ namespace character
                 foreach(Collider2D pushable in allPushableInRange)
                 {
                     pushable.GetComponent<JUB_PushableBehavior>().pushed = false;
+                    pushable.GetComponent<JUB_PushableBehavior>().ManagePushing();
                 }
             }
+            Debug.Log(isPushingObject.ToString());
 
             //inverser le booléen
 

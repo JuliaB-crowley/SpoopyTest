@@ -221,7 +221,7 @@ MonoBehaviour:
     m_Bits: 256
   attackDamage: 10
   ennemyWasHitOnce: 0
-  interactAndPushableRange: 1.5
+  interactAndPushableRange: 1.2
 --- !u!4 &193868455
 Transform:
   m_ObjectHideFlags: 0
@@ -664,7 +664,7 @@ GameObject:
   - component: {fileID: 1632972305}
   - component: {fileID: 1632972304}
   - component: {fileID: 1632972303}
-  m_Layer: 13
+  m_Layer: 12
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -680,13 +680,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1632972302}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b45c9fedf17a1b344a6c0578fbde4b61, type: 3}
+  m_Script: {fileID: 11500000, guid: af2071401c5c5ae49a2d5727c0928c64, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  interactible: 0
-  interacted: 0
-  player: {fileID: 0}
-  maeveScript: {fileID: 0}
+  pushable: 0
+  pushed: 0
+  playerTransform: {fileID: 0}
+  pushableObject: {fileID: 0}
 --- !u!58 &1632972304
 CircleCollider2D:
   m_ObjectHideFlags: 0
