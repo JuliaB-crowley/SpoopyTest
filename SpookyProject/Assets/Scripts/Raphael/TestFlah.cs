@@ -28,7 +28,8 @@ public class TestFlah : MonoBehaviour
             {
                 if (col.GetComponent<TestInvisibleInk>())
                 {
-                    col.GetComponent<TestInvisibleInk>().hasBeenFlashed = true;
+                    //mis en commentaire suite à l'implémentation de mon flash
+                    //col.GetComponent<TestInvisibleInk>().hasBeenFlashed = true;
                 }
             }
             hasFlashed = false;

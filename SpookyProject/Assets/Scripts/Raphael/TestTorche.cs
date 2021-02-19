@@ -12,22 +12,36 @@ public class TestTorche : MonoBehaviour
     public UnityEvent wasUnlit = new UnityEvent();
     List<Collider2D> litObjects = new List<Collider2D>();
 
+    //flash manager à mettre en enfant et sur layer flashable
+    public JUB_FlashManager flashManager;
+
     private void Start()
     {
+        flashManager = GetComponentInChildren<JUB_FlashManager>();
         wasUnlit.AddListener(UnlightEverything);
+        torcheMaterial.color = Color.black;
     }
     void Update()
     {
-        if (isLit)
+        if (flashManager.burned)
         {
-            torcheMaterial.color = Color.red;
-            GetComponent<CircleCollider2D>().radius = 2;
+            LitTorch();
         }
-        else
-        {
-            torcheMaterial.color = Color.black;
-            wasUnlit.Invoke();
-        }
+    }
+
+    void LitTorch()
+    {
+        torcheMaterial.color = Color.red;
+        GetComponent<CircleCollider2D>().radius = 2;
+        isLit = true;
+        Debug.Log("torche allumée ?");
+    }
+
+    void UnlitTorch()
+    {
+        torcheMaterial.color = Color.black;
+        isLit = false;
+        wasUnlit.Invoke();
     }
 
     //Cette méthode fau=it que quand la torche s'éteint lorsqu'un object est en train d'intéragir avec, cet objet s'étein aussi

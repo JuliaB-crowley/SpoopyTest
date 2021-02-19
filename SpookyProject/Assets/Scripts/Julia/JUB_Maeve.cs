@@ -27,6 +27,7 @@ namespace character
 
         [SerializeField]
         bool isInRoll,  isInRecoil, isInImmunity, isInRecover, isPushingObject;
+        public bool isFlashing;
         public LayerMask pushableObjects, interactibleObjects;
         public bool isCrouching;
         [SerializeField]
@@ -118,7 +119,7 @@ namespace character
 
         void Move()
         {
-            if (!isInRoll)
+            if (!isInRoll && !isFlashing)
             {
                 if (!isCrouching && !isPushingObject)
                 {
@@ -165,23 +166,26 @@ namespace character
 
         void Crouch()
         {
-            isCrouching = !isCrouching;
-            //changement mode anim debout accroupi
-            //son
-
-            if (isCrouching)
+            if(!isFlashing && !isInRoll && !isInRecover && !isPushingObject && !isInAttack)   
             {
-                Debug.Log("is Crouching !");
-                
-                //indique aux collisions détectors d'ignorer le layer crouchable 
-                //détection des ennemis baisse
-                
+                isCrouching = !isCrouching;
+                //changement mode anim debout accroupi
+                //son
+
+                if (isCrouching)
+                {
+                    Debug.Log("s Crouching !");
+
+                    //indique aux collisions détectors d'ignorer le layer crouchable 
+                    //détection des ennemis baisse
+
+                }
             }
         }
 
         void Roll()
         {
-            if (!isInRecover)
+            if (!isInRecover && !isPushingObject && !isCrouching)
             {
                 isInRoll = true;
                 isInImmunity = true;
@@ -222,7 +226,7 @@ namespace character
         void Attack(AttackProfile attackProfile)
         {
             Vector2 attackVector = Vector2.zero;
-            if (!isInRecover && !isInBuildup && !isInRoll && !isCrouching && !isPushingObject)
+            if (!isInRecover && !isInBuildup && !isInRoll && !isCrouching && !isPushingObject && !isFlashing)
             {
                 ennemiesHitLastTime.Clear();
 
@@ -364,7 +368,7 @@ namespace character
 
         void Interact()
         {
-            if(!allInteractibleInRange.Count().Equals(0))
+            if(!allInteractibleInRange.Count().Equals(0) && !isInRoll && !isInAttack && !isFlashing)
             {
                 if(allInteractibleInRange.Count().Equals(1))
                 {
@@ -402,41 +406,44 @@ namespace character
         }
         void PushObjects()
         {
-            isPushingObject = !isPushingObject;
-            if(!allPushableInRange.Count().Equals(0) && isPushingObject)
+            if (!isFlashing && !isCrouching && !isInAttack && !isInRoll)
             {
-                if(allPushableInRange.Count().Equals(1))
+                isPushingObject = !isPushingObject;
+                if (!allPushableInRange.Count().Equals(0) && isPushingObject)
                 {
-                    allPushableInRange[0].GetComponent<JUB_PushableBehavior>().pushed = true;
-                    allPushableInRange[0].GetComponent<JUB_PushableBehavior>().ManagePushing();
+                    if (allPushableInRange.Count().Equals(1))
+                    {
+                        allPushableInRange[0].GetComponent<JUB_PushableBehavior>().pushed = true;
+                        allPushableInRange[0].GetComponent<JUB_PushableBehavior>().ManagePushing();
+                    }
+                    else
+                    {
+                        float smallestAngle = Mathf.Infinity;
+                        Collider2D pushableTarget = allPushableInRange[0];
+                        foreach (Collider2D pushable in allPushableInRange)
+                        {
+                            Vector2 playerToPushable = pushable.transform.position - transform.position;
+                            float interactibleAngle = Vector2.Angle(lastDirection, playerToPushable);
+                            if (interactibleAngle < smallestAngle)
+                            {
+                                pushableTarget = pushable;
+                                smallestAngle = interactibleAngle;
+                            }
+                        }
+                        pushableTarget.GetComponent<JUB_PushableBehavior>().pushed = true;
+                        pushableTarget.GetComponent<JUB_PushableBehavior>().ManagePushing();
+                    }
                 }
-                else
+                else if (isPushingObject == false)
                 {
-                    float smallestAngle = Mathf.Infinity;
-                    Collider2D pushableTarget = allPushableInRange[0];
                     foreach (Collider2D pushable in allPushableInRange)
                     {
-                        Vector2 playerToPushable = pushable.transform.position - transform.position;
-                        float interactibleAngle = Vector2.Angle(lastDirection, playerToPushable);
-                        if(interactibleAngle < smallestAngle)
-                        {
-                            pushableTarget = pushable;
-                            smallestAngle = interactibleAngle;
-                        }
+                        pushable.GetComponent<JUB_PushableBehavior>().pushed = false;
+                        pushable.GetComponent<JUB_PushableBehavior>().ManagePushing();
                     }
-                    pushableTarget.GetComponent<JUB_PushableBehavior>().pushed = true;
-                    pushableTarget.GetComponent<JUB_PushableBehavior>().ManagePushing();
                 }
+                Debug.Log(isPushingObject.ToString());
             }
-            else if (isPushingObject == false)
-            {
-                foreach(Collider2D pushable in allPushableInRange)
-                {
-                    pushable.GetComponent<JUB_PushableBehavior>().pushed = false;
-                    pushable.GetComponent<JUB_PushableBehavior>().ManagePushing();
-                }
-            }
-            Debug.Log(isPushingObject.ToString());
 
             //inverser le booléen
 
