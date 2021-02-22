@@ -462,21 +462,21 @@ namespace character
         {
             if (collision.CompareTag("Heal"))
             {
-                HUDManager.currentLife += collision.GetComponent<CollectibleScript>().collectibleValeur;
-                collision.GetComponent<CollectibleScript>().collectibleObject.SetActive(false);
+                HUDManager.currentLife += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
+                collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
 
             if (collision.CompareTag("HealthBoost"))
             {
-                HUDManager.maxLife += collision.GetComponent<CollectibleScript>().collectibleValeur;
+                HUDManager.maxLife += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
                 HUDManager.currentLife = HUDManager.maxLife;
-                collision.GetComponent<CollectibleScript>().collectibleObject.SetActive(false);
+                collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
 
             if (collision.CompareTag("Bonbon"))
             {
-                HUDManager.currentBonbons += collision.GetComponent<CollectibleScript>().collectibleValeur;
-                collision.GetComponent<CollectibleScript>().collectibleObject.SetActive(false);
+                HUDManager.currentBonbons += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
+                collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
         }
     }

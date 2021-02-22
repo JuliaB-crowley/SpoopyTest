@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CollectibleScript : MonoBehaviour
+public class RPP_CollectibleScript : MonoBehaviour
 {
     public GameObject collectibleObject;
     public int collectibleValeur;
