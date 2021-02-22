@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class StepPuzzleMaster : MonoBehaviour
+public class RPP_StepPuzzleMaster : MonoBehaviour
 {
     //Le script qui gère le puzzle des dalles
     public int stepsRequired; // Combien de dalles le joueur doit bien activer pour réussir

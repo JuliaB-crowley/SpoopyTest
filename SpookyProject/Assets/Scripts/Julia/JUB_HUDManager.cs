@@ -3,21 +3,24 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class JUB_LifeManager : MonoBehaviour
+public class JUB_HUDManager : MonoBehaviour
 {
-    public int maxLife, currentLife;
-    public Text displayLife;
+    public int maxLife, currentLife, currentBonbons;
+    public Text displayLife, displayBonbons;
     
-    // Start is called before the first frame update
     void Start()
     {
         currentLife = maxLife;
     }
 
-    // Update is called once per frame
     void Update()
     {
+        displayBonbons.text = "" + currentBonbons;
         displayLife.text = currentLife.ToString() + " / " + maxLife.ToString();
+        if(currentLife > maxLife)
+        {
+            currentLife = maxLife;
+        }         
         //mettre le sucre d'orge étape par étape un array qui si life = ça numéro array = ça
     }
 
@@ -48,6 +51,7 @@ public class JUB_LifeManager : MonoBehaviour
 
     public void Die()
     {
+        //RIP
         //anim mort
         //respawn checkpoint
     }

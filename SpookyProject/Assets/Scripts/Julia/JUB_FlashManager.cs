@@ -6,17 +6,7 @@ public class JUB_FlashManager : MonoBehaviour
 {
     public bool burned, flashed;
     public float flashTime = 1;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
     public void FlashEnd()
     {
         StartCoroutine(FlashEndCoroutine());

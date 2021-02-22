@@ -46,12 +46,16 @@ namespace character
         Collider2D[] allPushableInRange, allInteractibleInRange;
         public float interactAndPushableRange;
 
+        //HUD
+        public JUB_HUDManager HUDManager;
+
         // Start is called before the first frame update
         void Start()
         {
             rigidBody = GetComponent<Rigidbody2D>();
             controller = new Controller();
             controller.Enable();
+            HUDManager = GameObject.FindGameObjectWithTag("HUD").GetComponent<JUB_HUDManager>();
 
             AttackProfile quickAttack = new AttackProfile(1, new Vector2(1, 1), 0.1f, 0.2f, "quick");
             AttackProfile heavyAttack = new AttackProfile(3, new Vector2(2, 1), 0, 0.8f, "heavy");
@@ -453,6 +457,27 @@ namespace character
             //si !isPush = enlever le parent
             //reduire le collider du joueur à son état d'origine
         }
-    }
 
+        private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Heal"))
+            {
+                HUDManager.currentLife += collision.GetComponent<CollectibleScript>().collectibleValeur;
+                collision.GetComponent<CollectibleScript>().collectibleObject.SetActive(false);
+            }
+
+            if (collision.CompareTag("HealthBoost"))
+            {
+                HUDManager.maxLife += collision.GetComponent<CollectibleScript>().collectibleValeur;
+                HUDManager.currentLife = HUDManager.maxLife;
+                collision.GetComponent<CollectibleScript>().collectibleObject.SetActive(false);
+            }
+
+            if (collision.CompareTag("Bonbon"))
+            {
+                HUDManager.currentBonbons += collision.GetComponent<CollectibleScript>().collectibleValeur;
+                collision.GetComponent<CollectibleScript>().collectibleObject.SetActive(false);
+            }
+        }
+    }
 }
