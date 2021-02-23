@@ -7,28 +7,44 @@ public class RPP_DoorScript : MonoBehaviour
     public JUB_InteractibleBehavior doorManager;
     public RPP_RoomMasterScript roomMaster;
     public GameObject doorObject;
+    public int minPuzzlesSolved;
+    [SerializeField] RPP_PuzzleMaster puzzleMaster;
+    public GameObject doorBlock;
 
     void Start()
     {
-        roomMaster = GetComponentInParent<RPP_RoomMasterScript>();
-        doorManager = GetComponent<JUB_InteractibleBehavior>();
+        puzzleMaster = GameObject.FindGameObjectWithTag("Puzzle Master").GetComponent<RPP_PuzzleMaster>();
+        roomMaster = this.GetComponentInParent<RPP_RoomMasterScript>();
+        doorManager = this.GetComponent<JUB_InteractibleBehavior>();
     }
 
     void Update()
     {
-        if (!roomMaster.playerIsPresent)
+        if (minPuzzlesSolved <= puzzleMaster.puzzlesSolved)
         {
-            doorObject.SetActive(false);
-            doorManager.interacted = false;
-        }
+            Debug.Log("The player has solved a puzzle");
+            doorBlock.SetActive(false);
+            if (!roomMaster.playerIsPresent)
+            {
+                doorObject.SetActive(false);
+                doorManager.interacted = false;
+            }
 
-        if (roomMaster.playerIsPresent && !doorManager.interacted)
-        {
-            doorObject.SetActive(true);
+            if (roomMaster.playerIsPresent && !doorManager.interacted)
+            {
+                doorObject.SetActive(true);
+            }
+            else
+            {
+                doorObject.SetActive(false);
+            }
         }
         else
         {
-            doorObject.SetActive(false);
-        }
+            doorObject.SetActive(true);
+            doorManager.interacted = false;
+            doorBlock.SetActive(true);
+            Debug.Log("The player has to solve a puzzle");
+        }       
     }
 }

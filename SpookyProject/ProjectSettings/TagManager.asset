@@ -9,6 +9,7 @@ TagManager:
   - Bonbon
   - HealthBoost
   - Door
+  - Puzzle Master
   layers:
   - Default
   - TransparentFX
