@@ -15,7 +15,7 @@ public class JUB_HUDManager : MonoBehaviour
 
     void Update()
     {
-        displayBonbons.text = "" + currentBonbons;
+        //displayBonbons.text = "" + currentBonbons;
         displayLife.text = currentLife.ToString() + " / " + maxLife.ToString();
         if(currentLife > maxLife)
         {
