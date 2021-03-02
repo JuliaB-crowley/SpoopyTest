@@ -22,7 +22,7 @@ public class JUB_ZoneScript : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if(isInterior == false)
+        if(isInterior == false && playerIsHere == true)
         {
             Vector3 desiredPosition = playerTransform.position + offSet;
             Vector3 smoothedPosition = Vector3.Lerp(cameraTransform.position, desiredPosition, smoothSpeed);
@@ -35,7 +35,8 @@ public class JUB_ZoneScript : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         Debug.Log("is in zone !" + isInterior.ToString());
-        if(collision.CompareTag("Player"))
+        Debug.Log(collision.tag.ToString());
+        //if(collision.CompareTag("Player"))
         {
             playerIsHere = true;
             if(isInterior == true)
