@@ -34,23 +34,17 @@ public class JUB_ZoneScript : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("is in zone !" + isInterior.ToString());
-        Debug.Log(collision.tag.ToString());
-        //if(collision.CompareTag("Player"))
-        {
+        //Debug.Log("is in zone !" + isInterior.ToString());
+
             playerIsHere = true;
             if(isInterior == true)
             {
                 cameraTransform.position = Vector3.MoveTowards(cameraTransform.position, roomCameraPoint.position, cameraSpeed * Time.deltaTime);
             }
-        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if(other.CompareTag("Player"))
-        {
             playerIsHere = false;
-        }
     }
 }
