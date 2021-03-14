@@ -46,6 +46,11 @@ public class ImpSMB_Idle : StateMachineBehaviour
                 NewDestinationCoroutine();
             }
         }
+
+        if (imp.playerInSight)
+        {
+            animator.Play("Pursue");
+        }
     }
 
     void NewDestination()

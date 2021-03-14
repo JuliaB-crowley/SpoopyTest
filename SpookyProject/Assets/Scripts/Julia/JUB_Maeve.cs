@@ -55,7 +55,7 @@ namespace character
             rigidBody = GetComponent<Rigidbody2D>();
             controller = new Controller();
             controller.Enable();
-            HUDManager = GameObject.FindGameObjectWithTag("HUD").GetComponent<JUB_HUDManager>();
+            //HUDManager = GameObject.FindGameObjectWithTag("HUD").GetComponent<JUB_HUDManager>();
 
             AttackProfile quickAttack = new AttackProfile(1, new Vector2(1, 1), 0.1f, 0.2f, "quick");
             AttackProfile heavyAttack = new AttackProfile(3, new Vector2(2, 1), 0, 0.8f, "heavy");
@@ -458,7 +458,7 @@ namespace character
             //reduire le collider du joueur à son état d'origine
         }
 
-        private void OnTriggerEnter2D(Collider2D collision)
+        /*private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Heal"))
             {
@@ -478,6 +478,6 @@ namespace character
                 HUDManager.currentBonbons += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
                 collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
-        }
+        }*/
     }
 }
