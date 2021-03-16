@@ -34,7 +34,7 @@ public class ImpSMB_Idle : StateMachineBehaviour
     {
         if((imp.transform.position - currentTarget.position).magnitude < 1 && !isCounting)
         {
-            Debug.LogWarning("Searching new destination");
+            //Debug.LogWarning("Searching new destination");
             NewDestination();
         }
         if(isCounting)
@@ -64,7 +64,7 @@ public class ImpSMB_Idle : StateMachineBehaviour
     {
         if (imp.patrolTargets.IndexOf(currentTarget) >= (imp.patrolTargets.Count - 1))
         {
-            Debug.LogWarning("reached end of list");
+            //Debug.LogWarning("reached end of list");
             if (cyclicPatrol)
             {
                 currentTarget = imp.patrolTargets[0];

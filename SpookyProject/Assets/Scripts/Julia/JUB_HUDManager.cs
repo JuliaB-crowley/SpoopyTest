@@ -16,11 +16,7 @@ public class JUB_HUDManager : MonoBehaviour
     void Update()
     {
         //displayBonbons.text = "" + currentBonbons;
-        displayLife.text = currentLife.ToString() + " / " + maxLife.ToString();
-        if(currentLife > maxLife)
-        {
-            currentLife = maxLife;
-        }         
+      
         //mettre le sucre d'orge étape par étape un array qui si life = ça numéro array = ça
     }
 

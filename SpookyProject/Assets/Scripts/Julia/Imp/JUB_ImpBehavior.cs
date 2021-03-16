@@ -15,7 +15,8 @@ public class JUB_ImpBehavior : MonoBehaviour
     public float maxSight;
     public Vector2 toPlayer;
     public LayerMask blocksLOS, isPlayer;
-    public bool playerInSight;
+    public bool playerInSight, playerInMemory;
+    public float timeBeforeForget, secondSinceLastSeen;
 
     //iddle elements
     public bool cyclicPatrol = false;
@@ -34,7 +35,7 @@ public class JUB_ImpBehavior : MonoBehaviour
 
         SMBanimator.GetBehaviour<ImpSMB_Idle>().imp = this;
         SMBanimator.GetBehaviour<ImpSMB_Pursue>().imp = this;
-        //SMBanimator.GetBehaviour<ImpSMB_Sprint>().imp = this;
+        SMBanimator.GetBehaviour<ImpSMB_Sprint>().imp = this;
         //SMBanimator.GetBehaviour<ImpSMB_Pause>().imp = this;
     }
 
@@ -44,6 +45,11 @@ public class JUB_ImpBehavior : MonoBehaviour
         toPlayer = player.transform.position - transform.position;
         toPlayer.Normalize();
         SightCast();
+        if(!playerInSight)
+        {
+            MemoryTime();
+
+        }
     }
 
     void SightCast()
@@ -69,6 +75,8 @@ public class JUB_ImpBehavior : MonoBehaviour
         {
             playerInSight = true;
             hitLength = hit2D.distance;
+            playerInMemory = true;
+            secondSinceLastSeen = 0;
         }
         else
         {
@@ -79,5 +87,15 @@ public class JUB_ImpBehavior : MonoBehaviour
 
 
 
+    }
+
+    void MemoryTime()
+    {
+        secondSinceLastSeen += Time.deltaTime;
+        if(secondSinceLastSeen >= timeBeforeForget)
+        {
+            playerInMemory = false;
+            secondSinceLastSeen = 0;
+        }
     }
 }

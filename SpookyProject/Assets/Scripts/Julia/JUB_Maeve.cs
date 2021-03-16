@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.UI;
 
 namespace character
 {
@@ -47,7 +48,10 @@ namespace character
         public float interactAndPushableRange;
 
         //HUD
-        public JUB_HUDManager HUDManager;
+        public int maxLife, currentLife, currentBonbons;
+        public Text displayLife, displayBonbons;
+        public Sprite[] heartSprites;
+        public Image heartsDisplay;
 
         // Start is called before the first frame update
         void Start()
@@ -55,10 +59,11 @@ namespace character
             rigidBody = GetComponent<Rigidbody2D>();
             controller = new Controller();
             controller.Enable();
-            //HUDManager = GameObject.FindGameObjectWithTag("HUD").GetComponent<JUB_HUDManager>();
 
             AttackProfile quickAttack = new AttackProfile(1, new Vector2(1, 1), 0.1f, 0.2f, "quick");
             AttackProfile heavyAttack = new AttackProfile(3, new Vector2(2, 1), 0, 0.8f, "heavy");
+
+            currentLife = maxLife;
 
             controller.MainController.Roll.performed += ctx => Roll();
             controller.MainController.Crouch.performed += ctx => Crouch();
@@ -76,6 +81,14 @@ namespace character
             InteractSphere();
             PushableSphere();
             Move();
+
+            displayLife.text = currentLife.ToString() + " / " + maxLife.ToString();
+            if (currentLife > maxLife)
+            {
+                currentLife = maxLife;
+            }
+
+            heartsDisplay.sprite = heartSprites[currentLife - 1];
         }
 
         void Inputs()
@@ -458,26 +471,60 @@ namespace character
             //reduire le collider du joueur à son état d'origine
         }
 
-        /*private void OnTriggerEnter2D(Collider2D collision)
+        //fonctions liées au HUD
+
+        public void TakeDamages(int damages)
+        {
+            currentLife -= damages;
+            if (currentLife <= 0)
+            {
+                currentLife = 0;
+                Die();
+            }
+        }
+
+        public void Heal(int heal)
+        {
+            currentLife += heal;
+            if (currentLife > maxLife)
+            {
+                currentLife = maxLife;
+            }
+        }
+
+        public void MaxUpgrades(int upgrade)
+        {
+            maxLife += upgrade;
+            currentLife += upgrade;
+        }
+
+        void Die()
+        {
+            //RIP
+            //anim mort
+            //respawn checkpoint
+        }
+
+       private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Heal"))
             {
-                HUDManager.currentLife += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
+                currentLife += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
                 collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
 
             if (collision.CompareTag("HealthBoost"))
             {
-                HUDManager.maxLife += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
-                HUDManager.currentLife = HUDManager.maxLife;
+                maxLife += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
+                currentLife = maxLife;
                 collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
 
             if (collision.CompareTag("Bonbon"))
             {
-                HUDManager.currentBonbons += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
+                currentBonbons += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
                 collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
-        }*/
+        }
     }
 }
