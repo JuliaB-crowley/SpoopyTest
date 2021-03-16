@@ -5,11 +5,35 @@ using UnityEngine;
 public class ImpSMB_Sprint : StateMachineBehaviour
 {
     public JUB_ImpBehavior imp;
+
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        imp.destinationSetter.enabled = true;
         Debug.LogWarning("was called");
+
+        //choix de la direction de sprint
+        RaycastHit2D hit2D;
+        float hitLength = imp.sprintDistance;
+
+        hit2D = Physics2D.Raycast(imp.transform.position, imp.toPlayer, hitLength, imp.blocksLOS);
+        if (hit2D.collider)
+        {
+            hitLength = hit2D.distance;
+        }
+
+        //sprint
+        imp.isAttacking = true;
+        Vector3 vectorToSprint = imp.toPlayer.normalized * hitLength;
+
+        imp.pathfinder.destination = imp.transform.position + vectorToSprint;
+
+        //passage d'état
+        if (Vector3.Distance((imp.transform.position + vectorToSprint), imp.pathfinder.destination) < 1)
+        {
+            imp.isAttacking = false;
+            Debug.LogWarning("Bidule a fini son sprint");
+            animator.Play("Pause");
+        }
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks

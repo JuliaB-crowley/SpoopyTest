@@ -355,7 +355,7 @@ GameObject:
   - component: {fileID: 458093324}
   - component: {fileID: 458093325}
   - component: {fileID: 458093326}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Vie
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -654,7 +654,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 889574357}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.63, y: -2.97, z: 0}
+  m_LocalPosition: {x: 3.16, y: 0.63, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1595648673}
@@ -710,7 +710,7 @@ MonoBehaviour:
     m_Bits: 1024
   playerInSight: 0
   playerInMemory: 0
-  timeBeforeForget: 5
+  timeBeforeForget: 4
   secondSinceLastSeen: 0
   cyclicPatrol: 1
   patrolTargets:
@@ -720,6 +720,11 @@ MonoBehaviour:
   - {fileID: 642158977}
   patrolWaitTime: 1
   stopDistance: 1
+  sprintDistance: 5
+  damageTrail: {fileID: 1358082257}
+  decayTime: 0.2
+  isAttacking: 0
+  pauseTime: 3
 --- !u!95 &889574364
 Animator:
   serializedVersion: 3
@@ -750,7 +755,7 @@ GameObject:
   - component: {fileID: 895546496}
   - component: {fileID: 895546497}
   - component: {fileID: 895546498}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Bonbons
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -882,6 +887,77 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1358082256
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1358082258}
+  - component: {fileID: 1358082257}
+  - component: {fileID: 1358082259}
+  m_Layer: 7
+  m_Name: Trail
+  m_TagString: DamageDealer
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!61 &1358082257
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358082256}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1}
+  m_EdgeRadius: 0
+--- !u!4 &1358082258
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358082256}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.216226, y: 0.903224, z: 25.823317}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1358082259
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358082256}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a410f01d60aaae4b9f6f932998660be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damageAmount: 1
 --- !u!1 &1427925465
 GameObject:
   m_ObjectHideFlags: 0
@@ -893,7 +969,7 @@ GameObject:
   - component: {fileID: 1427925468}
   - component: {fileID: 1427925467}
   - component: {fileID: 1427925466}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: Coeurs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1320,9 +1396,9 @@ GameObject:
   - component: {fileID: 1845036152}
   - component: {fileID: 1845036151}
   - component: {fileID: 1845036150}
-  m_Layer: 10
+  m_Layer: 9
   m_Name: HUD
-  m_TagString: Untagged
+  m_TagString: HUD
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1423,11 +1499,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5857361522451789452, guid: a4b6535be47ce4e4e8528f044324bf7d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.33
+      value: -1.51
       objectReference: {fileID: 0}
     - target: {fileID: 5857361522451789452, guid: a4b6535be47ce4e4e8528f044324bf7d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 4.06
+      value: 2.53
       objectReference: {fileID: 0}
     - target: {fileID: 5857361522451789452, guid: a4b6535be47ce4e4e8528f044324bf7d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1599,6 +1675,11 @@ MonoBehaviour:
   - {fileID: 642158977}
   patrolWaitTime: 1
   stopDistance: 0
+  sprintDistance: 0
+  damageTrail: {fileID: 0}
+  decayTime: 0
+  isAttacking: 0
+  pauseTime: 0
 --- !u!95 &2045512774
 Animator:
   serializedVersion: 3

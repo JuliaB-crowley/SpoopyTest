@@ -26,6 +26,15 @@ public class JUB_ImpBehavior : MonoBehaviour
     //pursue elements
     public float stopDistance;
 
+    //strint elements
+    public float sprintDistance;
+    public Collider2D damageTrail;
+    public float decayTime;
+    public bool isAttacking;
+
+    //pause elements
+    public float pauseTime;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -37,7 +46,7 @@ public class JUB_ImpBehavior : MonoBehaviour
         SMBanimator.GetBehaviour<ImpSMB_Idle>().imp = this;
         SMBanimator.GetBehaviour<ImpSMB_Pursue>().imp = this;
         SMBanimator.GetBehaviour<ImpSMB_Sprint>().imp = this;
-        //SMBanimator.GetBehaviour<ImpSMB_Pause>().imp = this;
+        SMBanimator.GetBehaviour<ImpSMB_Pause>().imp = this;
     }
 
     // Update is called once per frame
@@ -50,6 +59,10 @@ public class JUB_ImpBehavior : MonoBehaviour
         {
             MemoryTime();
 
+        }
+        if(isAttacking)
+        {
+            MakeDamages();
         }
     }
 
@@ -98,5 +111,17 @@ public class JUB_ImpBehavior : MonoBehaviour
             playerInMemory = false;
             secondSinceLastSeen = 0;
         }
+    }
+
+    void MakeDamages()
+    {
+        Object.Instantiate(damageTrail, this.transform);
+        StartCoroutine("TrailDestructionCoroutine");
+    }
+
+    IEnumerator TrailDestructionCoroutine()
+    {
+        yield return new WaitForSeconds(decayTime);
+        Destroy(damageTrail.gameObject);
     }
 }

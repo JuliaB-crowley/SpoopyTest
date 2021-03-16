@@ -29,6 +29,15 @@ public class ImpSMB_Pursue : StateMachineBehaviour
     //OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        toPlayer.x = (imp.player.transform.position.x - imp.transform.position.x);
+        toPlayer.y = (imp.player.transform.position.y - imp.transform.position.y);
+
+        float distanceToPlayer = toPlayer.magnitude;
+        float distanceToWalk = distanceToPlayer - imp.stopDistance;
+        vectorToTravel = toPlayer.normalized * distanceToWalk;
+
+        imp.pathfinder.destination = imp.transform.position + vectorToTravel;
+
         if (Vector2.Distance(imp.transform.position, imp.pathfinder.destination) < 1)
         {
             Debug.LogWarning("Bidule est arrivé");

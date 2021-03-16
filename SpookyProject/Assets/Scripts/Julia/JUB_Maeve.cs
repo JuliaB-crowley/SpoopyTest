@@ -525,6 +525,11 @@ namespace character
                 currentBonbons += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
                 collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
+
+            if (collision.CompareTag("DamageDealer"))
+            {
+                currentLife -= collision.GetComponent<JUB_DamagingEvent>().damageAmount;
+            }
         }
     }
 }

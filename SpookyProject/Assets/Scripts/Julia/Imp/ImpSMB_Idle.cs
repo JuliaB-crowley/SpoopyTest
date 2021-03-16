@@ -5,7 +5,7 @@ using UnityEngine;
 public class ImpSMB_Idle : StateMachineBehaviour
 {
     public JUB_ImpBehavior imp;
-    bool cyclicPatrol, isCounting = false, countFinished;
+    bool cyclicPatrol, isCounting = false;
     float timeElapsed;
     Transform currentTarget;
 
