@@ -23,7 +23,8 @@ public class JUB_ImpBehavior : MonoBehaviour
     public List<Transform> patrolTargets = new List<Transform>();
     public float patrolWaitTime;
 
-    //
+    //pursue elements
+    public float stopDistance;
 
     // Start is called before the first frame update
     void Start()

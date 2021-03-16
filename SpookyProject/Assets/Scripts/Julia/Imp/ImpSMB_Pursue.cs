@@ -5,12 +5,22 @@ using UnityEngine;
 public class ImpSMB_Pursue : StateMachineBehaviour
 {
     public JUB_ImpBehavior imp;
-    Transform trueDestination;
+    Vector3 vectorToTravel, toPlayer; 
     
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        imp.destinationSetter.target = imp.player.transform;
+        imp.destinationSetter.target = null;
+        imp.destinationSetter.enabled = false;
+
+        toPlayer.x = (imp.player.transform.position.x - imp.transform.position.x);
+        toPlayer.y = (imp.player.transform.position.y - imp.transform.position.y);
+
+        float distanceToPlayer = toPlayer.magnitude;
+        float distanceToWalk = distanceToPlayer - imp.stopDistance;
+        vectorToTravel = toPlayer.normalized * distanceToWalk;
+
+        imp.pathfinder.destination = imp.transform.position + vectorToTravel;
 
 
        
@@ -19,14 +29,15 @@ public class ImpSMB_Pursue : StateMachineBehaviour
     //OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        if (imp.destinationSetter.target == imp.transform)
+        if (Vector2.Distance(imp.transform.position, imp.pathfinder.destination) < 1)
         {
-            Debug.LogError("Bidule est arrivé");
+            Debug.LogWarning("Bidule est arrivé");
             animator.Play("Sprint");
         }
 
         if(!imp.playerInMemory)
         {
+            Debug.LogWarning("returned in patrol");
             animator.Play("Idle");
         }
     }

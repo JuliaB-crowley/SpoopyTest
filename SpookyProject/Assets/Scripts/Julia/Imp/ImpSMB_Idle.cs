@@ -12,6 +12,7 @@ public class ImpSMB_Idle : StateMachineBehaviour
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        imp.destinationSetter.enabled = true;
         timeElapsed = 0;
         cyclicPatrol = imp.cyclicPatrol;
         currentTarget = imp.transform;
@@ -22,7 +23,7 @@ public class ImpSMB_Idle : StateMachineBehaviour
             {
                 currentTarget = target;
                 firstTargetDistance = (target.position - imp.transform.position).magnitude;
-                Debug.LogWarning("distance = " + firstTargetDistance);
+                //Debug.LogWarning("distance = " + firstTargetDistance);
             }
         }
         imp.destinationSetter.target = currentTarget;
@@ -55,7 +56,7 @@ public class ImpSMB_Idle : StateMachineBehaviour
 
     void NewDestination()
     {
-        Debug.LogWarning(imp.patrolTargets.IndexOf(currentTarget));
+        //Debug.LogWarning(imp.patrolTargets.IndexOf(currentTarget));
         isCounting = true;
         timeElapsed = 0;
     }
@@ -81,7 +82,7 @@ public class ImpSMB_Idle : StateMachineBehaviour
 
         }
         imp.destinationSetter.target = currentTarget;
-        Debug.LogWarning(imp.patrolTargets.IndexOf(currentTarget));
+        //Debug.LogWarning(imp.patrolTargets.IndexOf(currentTarget));
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
