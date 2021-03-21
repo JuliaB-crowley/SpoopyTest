@@ -21,16 +21,16 @@ public class JUB_ImpBehavior : MonoBehaviour
     //iddle elements
     public bool cyclicPatrol = false;
     public List<Transform> patrolTargets = new List<Transform>();
-    public float patrolWaitTime;
+    public float patrolWaitTime, iddleSpeed;
 
     //pursue elements
-    public float stopDistance;
+    public float stopDistance, pursueSpeed;
 
     //strint elements
-    public float sprintDistance;
-    public Collider2D damageTrail;
-    public float decayTime;
+    public float sprintDistance, sprintSpeed, instantiationTime;
+    public GameObject damageTrail;
     public bool isAttacking;
+    float timeSinceInstantiated;
 
     //pause elements
     public float pauseTime;
@@ -38,6 +38,8 @@ public class JUB_ImpBehavior : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        instantiationTime = (sprintDistance / sprintSpeed)/7;
+
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<JUB_Maeve>();
         SMBanimator = GetComponent<Animator>();
         pathfinder = GetComponent<AIPath>();
@@ -62,7 +64,12 @@ public class JUB_ImpBehavior : MonoBehaviour
         }
         if(isAttacking)
         {
-            MakeDamages();
+            timeSinceInstantiated += Time.deltaTime;
+            if(timeSinceInstantiated >= instantiationTime)
+            {
+                MakeDamages();
+                timeSinceInstantiated = 0;
+            }
         }
     }
 
@@ -115,13 +122,8 @@ public class JUB_ImpBehavior : MonoBehaviour
 
     void MakeDamages()
     {
-        Object.Instantiate(damageTrail, this.transform);
-        StartCoroutine("TrailDestructionCoroutine");
+        Object.Instantiate(damageTrail).transform.position = transform.position;
     }
 
-    IEnumerator TrailDestructionCoroutine()
-    {
-        yield return new WaitForSeconds(decayTime);
-        Destroy(damageTrail.gameObject);
-    }
+
 }

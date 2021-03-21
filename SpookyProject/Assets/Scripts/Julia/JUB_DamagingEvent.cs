@@ -6,3 +6,5 @@ public class JUB_DamagingEvent : MonoBehaviour
 {
     public int damageAmount;
 }
+
+

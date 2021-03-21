@@ -5,11 +5,14 @@ using UnityEngine;
 public class ImpSMB_Sprint : StateMachineBehaviour
 {
     public JUB_ImpBehavior imp;
+    public Vector3 vectorToSprint;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         Debug.LogWarning("was called");
+
+        imp.pathfinder.maxSpeed = imp.sprintSpeed;
 
         //choix de la direction de sprint
         RaycastHit2D hit2D;
@@ -23,24 +26,24 @@ public class ImpSMB_Sprint : StateMachineBehaviour
 
         //sprint
         imp.isAttacking = true;
-        Vector3 vectorToSprint = imp.toPlayer.normalized * hitLength;
+        vectorToSprint = imp.toPlayer.normalized * hitLength;
 
         imp.pathfinder.destination = imp.transform.position + vectorToSprint;
 
+    }
+
+    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
+    override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
+    {
+        
         //passage d'état
-        if (Vector3.Distance((imp.transform.position + vectorToSprint), imp.pathfinder.destination) < 1)
+        if (Vector3.Distance((imp.transform.position), imp.pathfinder.destination) < 1)
         {
             imp.isAttacking = false;
             Debug.LogWarning("Bidule a fini son sprint");
             animator.Play("Pause");
         }
     }
-
-    // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
-    //override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
-    //{
-    //    
-    //}
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     //override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)

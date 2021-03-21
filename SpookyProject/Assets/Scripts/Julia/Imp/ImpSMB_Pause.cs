@@ -27,6 +27,7 @@ public class ImpSMB_Pause : StateMachineBehaviour
             {
                 animator.Play("Pursue");
             }
+            timeSincePause = 0;
         }
     }
 

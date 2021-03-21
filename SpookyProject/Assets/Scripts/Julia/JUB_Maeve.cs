@@ -20,7 +20,7 @@ namespace character
         //mouvements
         Rigidbody2D rigidBody;
         Controller controller;
-        public float speed, rollSpeed, rollDuration, rollRecover, crouchSpeed, xVelocity, yVelocity, accelerationTime, immunityTime;
+        public float speed, rollSpeed, rollDuration, rollRecover, crouchSpeed, xVelocity, yVelocity, accelerationTime;
         Vector2 rStick, lStick, lStickNormalised, lastDirection, rollDirection, targetSpeed, currentSpeed;
         public float lastAngle;
         public DirectionAngle dirAngle;
@@ -42,6 +42,7 @@ namespace character
         public int attackDamage;
         public bool ennemyWasHitOnce;
         List<Collider2D> ennemiesHitLastTime = new List<Collider2D>();
+        public float immunityTime;
 
         //pousser des objets
         Collider2D[] allPushableInRange, allInteractibleInRange;
@@ -222,23 +223,6 @@ namespace character
             isInRecover = false;
         }
 
-        public void Damage(int dmg)
-        {
-            if (!isInImmunity)
-            {
-                //inflict damages
-                //anim dégats
-                StartCoroutine(ImmunityCoroutine());
-            }
-        }
-
-        IEnumerator ImmunityCoroutine()
-        {
-            isInImmunity = true;
-            //clignotement/anim immunité
-            yield return new WaitForSeconds(immunityTime);
-            isInImmunity = false;
-        }
 
         void Attack(AttackProfile attackProfile)
         {
@@ -475,12 +459,28 @@ namespace character
 
         public void TakeDamages(int damages)
         {
-            currentLife -= damages;
-            if (currentLife <= 0)
+            if (!isInImmunity)
             {
-                currentLife = 0;
-                Die();
+                currentLife -= damages;
+                if (currentLife <= 0)
+                {
+                    currentLife = 0;
+                    Die();
+                }
+                Immunity(immunityTime);
             }
+        }
+
+        public void Immunity(float immuTime)
+        {
+            StartCoroutine(ImmunityCoroutine(immuTime));
+        }
+
+        IEnumerator ImmunityCoroutine(float immuTime)
+        {
+            isInImmunity = true;
+            yield return new WaitForSeconds(immuTime);
+            isInImmunity = false;
         }
 
         public void Heal(int heal)
@@ -528,7 +528,7 @@ namespace character
 
             if (collision.CompareTag("DamageDealer"))
             {
-                currentLife -= collision.GetComponent<JUB_DamagingEvent>().damageAmount;
+                TakeDamages(collision.GetComponent<JUB_DamagingEvent>().damageAmount);
             }
         }
     }

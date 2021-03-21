@@ -13,6 +13,8 @@ public class ImpSMB_Pursue : StateMachineBehaviour
         imp.destinationSetter.target = null;
         imp.destinationSetter.enabled = false;
 
+        imp.pathfinder.maxSpeed = imp.pursueSpeed;
+
         toPlayer.x = (imp.player.transform.position.x - imp.transform.position.x);
         toPlayer.y = (imp.player.transform.position.y - imp.transform.position.y);
 

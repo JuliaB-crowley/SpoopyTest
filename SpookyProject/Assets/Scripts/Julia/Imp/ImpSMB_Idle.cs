@@ -13,6 +13,9 @@ public class ImpSMB_Idle : StateMachineBehaviour
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         imp.destinationSetter.enabled = true;
+
+        imp.pathfinder.maxSpeed = imp.iddleSpeed;
+
         timeElapsed = 0;
         cyclicPatrol = imp.cyclicPatrol;
         currentTarget = imp.transform;
