@@ -6,6 +6,7 @@ using System.Linq;
 using System.Runtime.InteropServices.ComTypes;
 using UnityEngine;
 using UnityEngine.SocialPlatforms;
+using UnityEngine.UI;
 
 namespace character
 {
@@ -19,7 +20,7 @@ namespace character
         //mouvements
         Rigidbody2D rigidBody;
         Controller controller;
-        public float speed, rollSpeed, rollDuration, rollRecover, crouchSpeed, xVelocity, yVelocity, accelerationTime, immunityTime;
+        public float speed, rollSpeed, rollDuration, rollRecover, crouchSpeed, xVelocity, yVelocity, accelerationTime;
         Vector2 rStick, lStick, lStickNormalised, lastDirection, rollDirection, targetSpeed, currentSpeed;
         public float lastAngle;
         public DirectionAngle dirAngle;
@@ -27,6 +28,7 @@ namespace character
 
         [SerializeField]
         bool isInRoll,  isInRecoil, isInImmunity, isInRecover, isPushingObject;
+        public bool isFlashing;
         public LayerMask pushableObjects, interactibleObjects;
         public bool isCrouching;
         [SerializeField]
@@ -40,10 +42,17 @@ namespace character
         public int attackDamage;
         public bool ennemyWasHitOnce;
         List<Collider2D> ennemiesHitLastTime = new List<Collider2D>();
+        public float immunityTime;
 
         //pousser des objets
         Collider2D[] allPushableInRange, allInteractibleInRange;
         public float interactAndPushableRange;
+
+        //HUD
+        public int maxLife, currentLife, currentBonbons;
+        public Text displayLife, displayBonbons;
+        public Sprite[] heartSprites;
+        public Image heartsDisplay;
 
         // Start is called before the first frame update
         void Start()
@@ -54,6 +63,8 @@ namespace character
 
             AttackProfile quickAttack = new AttackProfile(1, new Vector2(1, 1), 0.1f, 0.2f, "quick");
             AttackProfile heavyAttack = new AttackProfile(3, new Vector2(2, 1), 0, 0.8f, "heavy");
+
+            currentLife = maxLife;
 
             controller.MainController.Roll.performed += ctx => Roll();
             controller.MainController.Crouch.performed += ctx => Crouch();
@@ -71,6 +82,14 @@ namespace character
             InteractSphere();
             PushableSphere();
             Move();
+
+            displayLife.text = currentLife.ToString() + " / " + maxLife.ToString();
+            if (currentLife > maxLife)
+            {
+                currentLife = maxLife;
+            }
+
+            heartsDisplay.sprite = heartSprites[currentLife - 1];
         }
 
         void Inputs()
@@ -118,7 +137,7 @@ namespace character
 
         void Move()
         {
-            if (!isInRoll)
+            if (!isInRoll && !isFlashing)
             {
                 if (!isCrouching && !isPushingObject)
                 {
@@ -165,23 +184,26 @@ namespace character
 
         void Crouch()
         {
-            isCrouching = !isCrouching;
-            //changement mode anim debout accroupi
-            //son
-
-            if (isCrouching)
+            if(!isFlashing && !isInRoll && !isInRecover && !isPushingObject && !isInAttack)   
             {
-                Debug.Log("is Crouching !");
-                
-                //indique aux collisions détectors d'ignorer le layer crouchable 
-                //détection des ennemis baisse
-                
+                isCrouching = !isCrouching;
+                //changement mode anim debout accroupi
+                //son
+
+                if (isCrouching)
+                {
+                    Debug.Log("s Crouching !");
+
+                    //indique aux collisions détectors d'ignorer le layer crouchable 
+                    //détection des ennemis baisse
+
+                }
             }
         }
 
         void Roll()
         {
-            if (!isInRecover)
+            if (!isInRecover && !isPushingObject && !isCrouching)
             {
                 isInRoll = true;
                 isInImmunity = true;
@@ -201,28 +223,11 @@ namespace character
             isInRecover = false;
         }
 
-        public void Damage(int dmg)
-        {
-            if (!isInImmunity)
-            {
-                //inflict damages
-                //anim dégats
-                StartCoroutine(ImmunityCoroutine());
-            }
-        }
-
-        IEnumerator ImmunityCoroutine()
-        {
-            isInImmunity = true;
-            //clignotement/anim immunité
-            yield return new WaitForSeconds(immunityTime);
-            isInImmunity = false;
-        }
 
         void Attack(AttackProfile attackProfile)
         {
             Vector2 attackVector = Vector2.zero;
-            if (!isInRecover && !isInBuildup && !isInRoll && !isCrouching && !isPushingObject)
+            if (!isInRecover && !isInBuildup && !isInRoll && !isCrouching && !isPushingObject && !isFlashing)
             {
                 ennemiesHitLastTime.Clear();
 
@@ -321,6 +326,9 @@ namespace character
             Gizmos.DrawLine(transform.position, transform.position + attackLength);
             attackLength = Quaternion.Euler(0, 0, -2 * heavyAtkZone.y) * attackLength;
             Gizmos.DrawLine(transform.position, transform.position + attackLength);
+
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(transform.position, interactAndPushableRange);
         }
 
         class AttackProfile
@@ -361,7 +369,7 @@ namespace character
 
         void Interact()
         {
-            if(!allInteractibleInRange.Count().Equals(0))
+            if(!allInteractibleInRange.Count().Equals(0) && !isInRoll && !isInAttack && !isFlashing)
             {
                 if(allInteractibleInRange.Count().Equals(1))
                 {
@@ -399,36 +407,43 @@ namespace character
         }
         void PushObjects()
         {
-            isPushingObject = !isPushingObject;
-            if(!allPushableInRange.Count().Equals(0) && isPushingObject)
+            if (!isFlashing && !isCrouching && !isInAttack && !isInRoll)
             {
-                if(allPushableInRange.Count().Equals(1))
+                isPushingObject = !isPushingObject;
+                if (!allPushableInRange.Count().Equals(0) && isPushingObject)
                 {
-                    allPushableInRange[0].GetComponent<JUB_PushableBehavior>().pushed = true;
+                    if (allPushableInRange.Count().Equals(1))
+                    {
+                        allPushableInRange[0].GetComponent<JUB_PushableBehavior>().pushed = true;
+                        allPushableInRange[0].GetComponent<JUB_PushableBehavior>().ManagePushing();
+                    }
+                    else
+                    {
+                        float smallestAngle = Mathf.Infinity;
+                        Collider2D pushableTarget = allPushableInRange[0];
+                        foreach (Collider2D pushable in allPushableInRange)
+                        {
+                            Vector2 playerToPushable = pushable.transform.position - transform.position;
+                            float interactibleAngle = Vector2.Angle(lastDirection, playerToPushable);
+                            if (interactibleAngle < smallestAngle)
+                            {
+                                pushableTarget = pushable;
+                                smallestAngle = interactibleAngle;
+                            }
+                        }
+                        pushableTarget.GetComponent<JUB_PushableBehavior>().pushed = true;
+                        pushableTarget.GetComponent<JUB_PushableBehavior>().ManagePushing();
+                    }
                 }
-                else
+                else if (isPushingObject == false)
                 {
-                    float smallestAngle = Mathf.Infinity;
-                    Collider2D pushableTarget = allPushableInRange[0];
                     foreach (Collider2D pushable in allPushableInRange)
                     {
-                        Vector2 playerToPushable = pushable.transform.position - transform.position;
-                        float interactibleAngle = Vector2.Angle(lastDirection, playerToPushable);
-                        if(interactibleAngle < smallestAngle)
-                        {
-                            pushableTarget = pushable;
-                            smallestAngle = interactibleAngle;
-                        }
+                        pushable.GetComponent<JUB_PushableBehavior>().pushed = false;
+                        pushable.GetComponent<JUB_PushableBehavior>().ManagePushing();
                     }
-                    pushableTarget.GetComponent<JUB_PushableBehavior>().pushed = true;
                 }
-            }
-            else if (isPushingObject == false)
-            {
-                foreach(Collider2D pushable in allPushableInRange)
-                {
-                    pushable.GetComponent<JUB_PushableBehavior>().pushed = false;
-                }
+                Debug.Log(isPushingObject.ToString());
             }
 
             //inverser le booléen
@@ -439,6 +454,82 @@ namespace character
             //si !isPush = enlever le parent
             //reduire le collider du joueur à son état d'origine
         }
-    }
 
+        //fonctions liées au HUD
+
+        public void TakeDamages(int damages)
+        {
+            if (!isInImmunity)
+            {
+                currentLife -= damages;
+                if (currentLife <= 0)
+                {
+                    currentLife = 0;
+                    Die();
+                }
+                Immunity(immunityTime);
+            }
+        }
+
+        public void Immunity(float immuTime)
+        {
+            StartCoroutine(ImmunityCoroutine(immuTime));
+        }
+
+        IEnumerator ImmunityCoroutine(float immuTime)
+        {
+            isInImmunity = true;
+            yield return new WaitForSeconds(immuTime);
+            isInImmunity = false;
+        }
+
+        public void Heal(int heal)
+        {
+            currentLife += heal;
+            if (currentLife > maxLife)
+            {
+                currentLife = maxLife;
+            }
+        }
+
+        public void MaxUpgrades(int upgrade)
+        {
+            maxLife += upgrade;
+            currentLife += upgrade;
+        }
+
+        void Die()
+        {
+            //RIP
+            //anim mort
+            //respawn checkpoint
+        }
+
+       private void OnTriggerEnter2D(Collider2D collision)
+        {
+            if (collision.CompareTag("Heal"))
+            {
+                currentLife += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
+                collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
+            }
+
+            if (collision.CompareTag("HealthBoost"))
+            {
+                maxLife += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
+                currentLife = maxLife;
+                collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
+            }
+
+            if (collision.CompareTag("Bonbon"))
+            {
+                currentBonbons += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
+                collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
+            }
+
+            if (collision.CompareTag("DamageDealer"))
+            {
+                TakeDamages(collision.GetComponent<JUB_DamagingEvent>().damageAmount);
+            }
+        }
+    }
 }

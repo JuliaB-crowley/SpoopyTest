@@ -9,14 +9,12 @@ public class JUB_InteractibleBehavior : MonoBehaviour
     public GameObject player;
     public JUB_Maeve maeveScript;
 
-    // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player");
         maeveScript = player.GetComponent<JUB_Maeve>();
     }
 
-    // Update is called once per frame
     void Update()
     {
         if(interactible)

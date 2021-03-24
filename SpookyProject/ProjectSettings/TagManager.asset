@@ -3,7 +3,14 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - HUD
+  - Heal
+  - Bonbon
+  - HealthBoost
+  - Door
+  - Puzzle Master
+  - DamageDealer
   layers:
   - Default
   - TransparentFX
@@ -19,8 +26,8 @@ TagManager:
   - CrouchingBlock
   - PushableObjects
   - Interactible
-  - 
-  - 
+  - FlashableObjects
+  - Zone
   - 
   - 
   - 
