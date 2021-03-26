@@ -6,7 +6,10 @@ public class JUB_EnnemyDamage : MonoBehaviour
 {
     public float maxHealth;
     [SerializeField]
-    float currentHealth;
+    float currentHealth, deathAnimationTime;
+
+    public bool hasLoot;
+    public List<GameObject> possibleLoots;
 
     // Start is called before the first frame update
     void Start()
@@ -31,5 +34,17 @@ public class JUB_EnnemyDamage : MonoBehaviour
     {
         //animation mort
         //son mort
+        if(hasLoot)
+        {
+            int index = Random.Range(0, possibleLoots.Count - 1);
+            Instantiate(possibleLoots[index], transform.position, Quaternion.identity);
+        }
+        StartCoroutine("DeathCoroutine");
+    }
+
+    IEnumerator DeathCoroutine()
+    {
+        yield return new WaitForSeconds(deathAnimationTime);
+        Destroy(gameObject);
     }
 }
