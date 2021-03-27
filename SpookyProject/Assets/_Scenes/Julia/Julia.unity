@@ -517,6 +517,7 @@ GameObject:
   - component: {fileID: 1309339911}
   - component: {fileID: 1309339910}
   - component: {fileID: 1309339909}
+  - component: {fileID: 1309339917}
   m_Layer: 0
   m_Name: Von Bidule
   m_TagString: Untagged
@@ -560,8 +561,14 @@ MonoBehaviour:
   - {fileID: 642158977}
   patrolWaitTime: 1
   iddleSpeed: 2.5
-  stopDistance: 0
+  stopDistance: 1
   pursueSpeed: 2.5
+  pauseTime: 2
+  attackRange: 1.5
+  attackDamages: 2
+  bodyIsBroken: 0
+  bodyHealth: 0
+  ennemyDamage: {fileID: 0}
 --- !u!95 &1309339910
 Animator:
   serializedVersion: 3
@@ -712,6 +719,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1309339917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1309339908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1ccdc33e1bca3f47b9d6593059bee1c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 4
+  currentHealth: 0
+  deathAnimationTime: 0
+  hasLoot: 0
+  possibleLoots: []
 --- !u!1 &1334177433
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,6 +1089,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1845036148, guid: a4b6535be47ce4e4e8528f044324bf7d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1845036152, guid: a4b6535be47ce4e4e8528f044324bf7d, type: 3}
       propertyPath: m_Camera
       value: 
@@ -1075,11 +1103,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5857361522451789452, guid: a4b6535be47ce4e4e8528f044324bf7d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -1.51
+      value: -1.63
       objectReference: {fileID: 0}
     - target: {fileID: 5857361522451789452, guid: a4b6535be47ce4e4e8528f044324bf7d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 2.53
+      value: 2.35
       objectReference: {fileID: 0}
     - target: {fileID: 5857361522451789452, guid: a4b6535be47ce4e4e8528f044324bf7d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1116,6 +1144,14 @@ PrefabInstance:
     - target: {fileID: 5857361522451789455, guid: a4b6535be47ce4e4e8528f044324bf7d, type: 3}
       propertyPath: m_Name
       value: Maeve
+      objectReference: {fileID: 0}
+    - target: {fileID: 7144804026496578758, guid: a4b6535be47ce4e4e8528f044324bf7d, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7144804026496578758, guid: a4b6535be47ce4e4e8528f044324bf7d, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4b6535be47ce4e4e8528f044324bf7d, type: 3}

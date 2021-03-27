@@ -5,6 +5,7 @@ using UnityEngine;
 public class SkeletonSMB_Pause : StateMachineBehaviour
 {
     public JUB_SkeletonBehavior skeleton;
+    public float timeSincePause;
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     //override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     //{
@@ -14,7 +15,20 @@ public class SkeletonSMB_Pause : StateMachineBehaviour
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-
+        timeSincePause += Time.deltaTime;
+        if (timeSincePause >= skeleton.pauseTime)
+        {
+            if (!skeleton.playerInMemory)
+            {
+                Debug.LogWarning("returned in patrol");
+                animator.Play("Idle");
+            }
+            else
+            {
+                animator.Play("Pursue");
+            }
+            timeSincePause = 0;
+        }
     }
 
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state

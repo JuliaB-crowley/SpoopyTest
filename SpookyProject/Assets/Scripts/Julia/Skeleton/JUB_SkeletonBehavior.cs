@@ -26,10 +26,24 @@ public class JUB_SkeletonBehavior : MonoBehaviour
     //pursue elements
     public float stopDistance, pursueSpeed;
 
+    //pause elements
+    public float pauseTime;
+
+    //combat elements
+    public float attackRange;
+    public int attackDamages;
+
+    //body destruction elements
+    public bool bodyIsBroken;
+    public float bodyHealth;
+    float thresholdLife;
+    public JUB_EnnemyDamage ennemyDamage;
+
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<JUB_Maeve>();
+        ennemyDamage = GetComponent<JUB_EnnemyDamage>();
         SMBanimator = GetComponent<Animator>();
         pathfinder = GetComponent<AIPath>();
         destinationSetter = GetComponent<AIDestinationSetter>();
@@ -37,11 +51,12 @@ public class JUB_SkeletonBehavior : MonoBehaviour
         SMBanimator.GetBehaviour<SkeletonSMB_Iddle>().skeleton = this;
         SMBanimator.GetBehaviour<SkeletonSMB_Pursue>().skeleton = this;
         SMBanimator.GetBehaviour<SkeletonSMB_Pause>().skeleton = this;
-        //SMBanimator.GetBehaviour<SkeletonSMB_Attack>().skeleton = this;
+        SMBanimator.GetBehaviour<SkeletonSMB_Attack>().skeleton = this;
         //SMBanimator.GetBehaviour<SkeletonSMB_Escape>().skeleton = this;
-        //SMBanimator.GetBehaviour<SkeletonSMB_ReconstructionBody>().skeleton = this;
-        //SMBanimator.GetBehaviour<SkeletonSMB_DestructionBody>().skeleton = this;
+        SMBanimator.GetBehaviour<SkeletonSMB_ReconstructionBody>().skeleton = this;
+        SMBanimator.GetBehaviour<SkeletonSMB_DestructionBody>().skeleton = this;
 
+        thresholdLife = ennemyDamage.maxHealth - bodyHealth;
     }
 
     // Update is called once per frame
@@ -54,6 +69,11 @@ public class JUB_SkeletonBehavior : MonoBehaviour
         {
             MemoryTime();
 
+        }
+
+        if(ennemyDamage.currentHealth <= thresholdLife)
+        {
+            SMBanimator.Play("Destruction");
         }
     }
 

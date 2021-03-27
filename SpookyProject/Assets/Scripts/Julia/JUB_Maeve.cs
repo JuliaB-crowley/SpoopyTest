@@ -89,7 +89,14 @@ namespace character
                 currentLife = maxLife;
             }
 
-            heartsDisplay.sprite = heartSprites[currentLife - 1];
+            if(currentLife <= 0)
+            {
+                heartsDisplay.sprite = heartSprites[0];
+            }
+            else 
+            { 
+                heartsDisplay.sprite = heartSprites[currentLife - 1];
+            }
         }
 
         void Inputs()

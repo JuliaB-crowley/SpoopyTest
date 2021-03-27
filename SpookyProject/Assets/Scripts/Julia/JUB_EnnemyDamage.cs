@@ -5,8 +5,7 @@ using UnityEngine;
 public class JUB_EnnemyDamage : MonoBehaviour
 {
     public float maxHealth;
-    [SerializeField]
-    float currentHealth, deathAnimationTime;
+    public float currentHealth, deathAnimationTime;
 
     public bool hasLoot;
     public List<GameObject> possibleLoots;
