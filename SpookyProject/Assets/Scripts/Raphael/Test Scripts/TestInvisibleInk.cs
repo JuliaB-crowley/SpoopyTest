@@ -24,11 +24,15 @@ public class TestInvisibleInk : MonoBehaviour
     {
         if (flashManager.flashed)
         {
-            mesh.enabled = true;
+            StartCoroutine(InkAppear());
         }
-        else
-        {
-            mesh.enabled = false;
-        }
+    }
+
+    //Coroutine qui fait apparaitre les invisible ink pendant une petite période
+    IEnumerator InkAppear()
+    {
+        mesh.enabled = true;
+        yield return new WaitForSeconds(visibleTime);
+        mesh.enabled = false;
     }
 }
