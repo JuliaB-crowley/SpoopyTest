@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RPP_RoomMasterScript : MonoBehaviour
 {
-    public bool playerIsPresent;
+    public bool playerIsPresent, firstRoom;
     public Vector2 roomZone;
     public LayerMask playerLayer;
     public static float cameraTransitionSpeed = 100f;
@@ -14,6 +14,11 @@ public class RPP_RoomMasterScript : MonoBehaviour
     {
         cameraTransform = GameObject.FindGameObjectWithTag("MainCamera").transform;
         roomCenter = this.transform;
+
+        if (firstRoom)
+        {
+            cameraTransform.position = roomCenter.position;
+        }
     }
 
     private void Update()
