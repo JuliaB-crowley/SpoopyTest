@@ -73,6 +73,8 @@ public class JUB_Flash : MonoBehaviour
             }
 
             StartCoroutine(EndFlash());
+
+            Debug.Log("flash was performed");
         }
     }
 
