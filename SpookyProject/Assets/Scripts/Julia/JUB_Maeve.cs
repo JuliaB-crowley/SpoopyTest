@@ -516,13 +516,13 @@ namespace character
         {
             if (collision.CompareTag("Heal"))
             {
-                currentLife += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
+                Heal(collision.GetComponent<RPP_CollectibleScript>().collectibleValeur);
                 collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
 
             if (collision.CompareTag("HealthBoost"))
             {
-                maxLife += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
+                MaxUpgrades(collision.GetComponent<RPP_CollectibleScript>().collectibleValeur);
                 currentLife = maxLife;
                 collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
