@@ -33,6 +33,9 @@ public class JUB_SkeletonBehavior : MonoBehaviour
     public float attackRange;
     public int attackDamages;
 
+    //flee elements
+    public float fleeDistance, fleeSpeed;
+
     //body destruction elements
     public bool bodyIsBroken;
     public float bodyHealth;
@@ -52,7 +55,7 @@ public class JUB_SkeletonBehavior : MonoBehaviour
         SMBanimator.GetBehaviour<SkeletonSMB_Pursue>().skeleton = this;
         SMBanimator.GetBehaviour<SkeletonSMB_Pause>().skeleton = this;
         SMBanimator.GetBehaviour<SkeletonSMB_Attack>().skeleton = this;
-        //SMBanimator.GetBehaviour<SkeletonSMB_Escape>().skeleton = this;
+        SMBanimator.GetBehaviour<SkeletonSMB_Escape>().skeleton = this;
         SMBanimator.GetBehaviour<SkeletonSMB_ReconstructionBody>().skeleton = this;
         SMBanimator.GetBehaviour<SkeletonSMB_DestructionBody>().skeleton = this;
 
@@ -71,7 +74,7 @@ public class JUB_SkeletonBehavior : MonoBehaviour
 
         }
 
-        if(ennemyDamage.currentHealth <= thresholdLife)
+        if(ennemyDamage.currentHealth <= thresholdLife && !bodyIsBroken)
         {
             SMBanimator.Play("Destruction");
         }
