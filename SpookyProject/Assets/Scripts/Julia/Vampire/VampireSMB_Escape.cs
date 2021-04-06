@@ -2,67 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SkeletonSMB_Escape : StateMachineBehaviour
+public class VampireSMB_Escape : StateMachineBehaviour
 {
-
-    public JUB_SkeletonBehavior skeleton;
+    public JUB_VampireBehavior vampire;
     public float maxFleeRate = 0.5f, deviationAngle = 5, fleeLenght;
     float timeSinceFleeBegins;
 
     // OnStateEnter is called when a transition starts and the state machine starts to evaluate this state
     override public void OnStateEnter(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
+        Debug.LogWarning("is attempting to escape !");
+        vampire.isEscaping = true;
+        vampire.destinationSetter.target = null;
+        vampire.destinationSetter.enabled = false;
 
-        skeleton.destinationSetter.target = null;
-        skeleton.destinationSetter.enabled = false;
-
-        skeleton.pathfinder.maxSpeed = skeleton.fleeSpeed; 
-        skeleton.pathfinder.destination = FleeTarget();
-        skeleton.pathfinder.SearchPath();
+        vampire.pathfinder.maxSpeed = vampire.fleeSpeed;
+        vampire.pathfinder.destination = FleeTarget();
+        vampire.pathfinder.SearchPath();
     }
 
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
         timeSinceFleeBegins += Time.deltaTime;
-        if(timeSinceFleeBegins >= maxFleeRate)
+        if (timeSinceFleeBegins >= maxFleeRate)
         {
-            skeleton.pathfinder.destination = FleeTarget();
-            skeleton.pathfinder.SearchPath();
+            vampire.pathfinder.destination = FleeTarget();
+            vampire.pathfinder.SearchPath();
             timeSinceFleeBegins = 0;
         }
-        Debug.LogWarning(skeleton.toPlayer.magnitude);
-        if(Vector2.Distance(skeleton.transform.position, skeleton.player.transform.position) > skeleton.fleeDistance)
+        //Debug.LogWarning(vampire.toPlayer.magnitude);
+        if (Vector2.Distance(vampire.transform.position, vampire.player.transform.position) > vampire.fleeDistance)
         {
-            animator.Play("Reconstruction");
+           animator.Play("Pause");
         }
-    }  
+    }
 
     Vector3 FleeTarget()
     {
         Vector3 result = Vector3.zero;
         RaycastHit2D hit2D;
         float hitLenght = fleeLenght;
-        Vector3 angle = -skeleton.toPlayer;
-        for (int i = 0; i*deviationAngle < 180; i++)
+        Vector3 angle = -vampire.toPlayer;
+        for (int i = 0; i * deviationAngle < 180; i++)
         {
-            angle = -skeleton.toPlayer.normalized;
+            angle = -vampire.toPlayer.normalized;
             angle = Quaternion.AngleAxis(deviationAngle * i, Vector3.forward) * angle;
-            hit2D = Physics2D.Raycast(skeleton.transform.position, angle, hitLenght, skeleton.blocksLOS);
+            hit2D = Physics2D.Raycast(vampire.transform.position, angle, hitLenght, vampire.blocksLOS);
             if (hit2D.collider)
             {
-                angle = -skeleton.toPlayer.normalized;
+                angle = -vampire.toPlayer.normalized;
                 angle = Quaternion.AngleAxis(-deviationAngle * i, Vector3.forward) * angle;
-                hit2D = Physics2D.Raycast(skeleton.transform.position, angle, hitLenght, skeleton.blocksLOS);
+                hit2D = Physics2D.Raycast(vampire.transform.position, angle, hitLenght, vampire.blocksLOS);
                 if (!hit2D.collider)
                 {
-                    result = (skeleton.transform.position + angle * fleeLenght);
+                    result = (vampire.transform.position + angle * fleeLenght);
                     break;
                 }
             }
             else
             {
-                result = skeleton.transform.position + angle * fleeLenght;
+                result = vampire.transform.position + angle * fleeLenght;
                 break;
             }
 
@@ -70,10 +70,10 @@ public class SkeletonSMB_Escape : StateMachineBehaviour
         if (result == Vector3.zero)
         {
 
-            angle = -skeleton.toPlayer.normalized;
-            hit2D = Physics2D.Raycast(skeleton.transform.position, angle, hitLenght, skeleton.blocksLOS);
+            angle = -vampire.toPlayer.normalized;
+            hit2D = Physics2D.Raycast(vampire.transform.position, angle, hitLenght, vampire.blocksLOS);
             hitLenght = hit2D.distance;
-            result = skeleton.transform.position + angle * hitLenght;
+            result = vampire.transform.position + angle * hitLenght;
         }
 
         return result;
@@ -82,7 +82,9 @@ public class SkeletonSMB_Escape : StateMachineBehaviour
     // OnStateExit is called when a transition ends and the state machine finishes evaluating this state
     override public void OnStateExit(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        skeleton.destinationSetter.enabled = true;
+        vampire.destinationSetter.enabled = true;
+        vampire.destinationSetter.target = null;
+        vampire.isEscaping = false;
     }
 
     // OnStateMove is called right after Animator.OnAnimatorMove()
