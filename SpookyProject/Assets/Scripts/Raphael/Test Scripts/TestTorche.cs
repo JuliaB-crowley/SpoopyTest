@@ -5,8 +5,9 @@ using UnityEngine;
 
 public class TestTorche : MonoBehaviour
 {
-    public Material torcheMaterial; // Je modifie le material juste pour avoir du feedback de test, pas besoin de le maintenir
     public bool isLit = false; //Bool qui détermine si la torche est active ou pas
+    public SpriteRenderer spriteRenderer; //Sprite Renderer de la torche
+    public Sprite litTorch, unlitTorch; //Possibles Sprites que la torche peux avoir
 
     //C'est Pierre qui à fait ça
     public UnityEvent wasUnlit = new UnityEvent();
@@ -17,9 +18,18 @@ public class TestTorche : MonoBehaviour
 
     private void Start()
     {
-        flashManager = GetComponentInChildren<JUB_FlashManager>();
-        wasUnlit.AddListener(UnlightEverything);
-        torcheMaterial.color = Color.black;
+        spriteRenderer = GetComponent<SpriteRenderer>();
+        flashManager = GetComponent<JUB_FlashManager>();
+        //wasUnlit.AddListener(UnlightEverything);
+
+        if (!isLit)
+        {
+            spriteRenderer.sprite = unlitTorch;
+        }
+        else
+        {
+            spriteRenderer.sprite = litTorch;
+        }
     }
     void Update()
     {
@@ -31,26 +41,26 @@ public class TestTorche : MonoBehaviour
 
     void LitTorch()
     {
-        torcheMaterial.color = Color.red;
-        GetComponent<CircleCollider2D>().radius = 2;
+        //GetComponent<CircleCollider2D>().radius = 2;
         isLit = true;
-        Debug.Log("torche allumée ?");
+        spriteRenderer.sprite = litTorch;
+        Debug.Log("torche allumée");
     }
 
     void UnlitTorch()
     {
-        torcheMaterial.color = Color.black;
+        spriteRenderer.sprite = unlitTorch;
         isLit = false;
         wasUnlit.Invoke();
     }
 
     //Cette méthode fau=it que quand la torche s'éteint lorsqu'un object est en train d'intéragir avec, cet objet s'étein aussi
-    void UnlightEverything()
+    /*void UnlightEverything()
     {
         GetComponent<CircleCollider2D>().radius = 0;
         foreach (Collider2D col in litObjects)
         {
-            col.GetComponent<TestInvisibleInk>().mesh.enabled = false;
+            col.GetComponent<RPP_InvisibleInkScript>().sprite.enabled = false;
         }
         litObjects.Clear();
     }
@@ -61,9 +71,9 @@ public class TestTorche : MonoBehaviour
         if (isLit)
         {
             litObjects.Add(collision);
-            if (collision.GetComponent<TestInvisibleInk>())
+            if (collision.GetComponent<RPP_InvisibleInkScript>())
             {
-                collision.GetComponent<TestInvisibleInk>().mesh.enabled = true;
+                collision.GetComponent<RPP_InvisibleInkScript>().sprite.enabled = true;
             }
         }
     }
@@ -74,10 +84,10 @@ public class TestTorche : MonoBehaviour
         if (isLit)
         {
             litObjects.Remove(collision);
-            if (collision.GetComponent<TestInvisibleInk>())
+            if (collision.GetComponent<RPP_InvisibleInkScript>())
             {
-                collision.GetComponent<TestInvisibleInk>().mesh.enabled = false;
+                collision.GetComponent<RPP_InvisibleInkScript>().sprite.enabled = false;
             }
         }
-    }
+    }*/
 }

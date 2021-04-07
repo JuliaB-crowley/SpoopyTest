@@ -26,11 +26,11 @@ public class TestFlah : MonoBehaviour
         {
             foreach (Collider2D col in collider2Ds)
             {
-                if (col.GetComponent<TestInvisibleInk>())
+                /*if (col.GetComponent<TestInvisibleInk>())
                 {
                     //mis en commentaire suite à l'implémentation de mon flash
                     //col.GetComponent<TestInvisibleInk>().hasBeenFlashed = true;
-                }
+                }*/
             }
             hasFlashed = false;
         }
