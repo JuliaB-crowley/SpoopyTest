@@ -8,12 +8,12 @@ public class RPP_DoorScript : MonoBehaviour
     public RPP_RoomMasterScript roomMaster;
     public GameObject doorObject;
     public int minPuzzlesSolved;
-    [SerializeField] RPP_PuzzleMaster puzzleMaster;
+    [SerializeField] RPP_GeneralPuzzleMaster puzzleMaster;
     public GameObject doorBlock;
 
     void Start()
     {
-        puzzleMaster = GameObject.FindGameObjectWithTag("Puzzle Master").GetComponent<RPP_PuzzleMaster>();
+        puzzleMaster = GameObject.FindGameObjectWithTag("Puzzle Master").GetComponent<RPP_GeneralPuzzleMaster>();
         roomMaster = this.GetComponentInParent<RPP_RoomMasterScript>();
         doorManager = this.GetComponent<JUB_InteractibleBehavior>();
     }
@@ -22,7 +22,7 @@ public class RPP_DoorScript : MonoBehaviour
     {
         if (minPuzzlesSolved <= puzzleMaster.puzzlesSolved)
         {
-            Debug.Log("The player has solved a puzzle");
+            //Debug.Log("The player has solved a puzzle");
             doorBlock.SetActive(false);
             if (!roomMaster.playerIsPresent)
             {

@@ -5,9 +5,10 @@ using UnityEngine;
 
 public class TestTorche : MonoBehaviour
 {
-    public bool isLit = false; //Bool qui détermine si la torche est active ou pas
+    public bool isLit = false, hasBeenBurned = false; //Bool qui détermine si la torche est active ou pas
     public SpriteRenderer spriteRenderer; //Sprite Renderer de la torche
     public Sprite litTorch, unlitTorch; //Possibles Sprites que la torche peux avoir
+    [SerializeField] RPP_ButtonsPuzzleManager torchesManager; //Script qui gère les puzzles des torches
 
     //C'est Pierre qui à fait ça
     public UnityEvent wasUnlit = new UnityEvent();
@@ -18,6 +19,7 @@ public class TestTorche : MonoBehaviour
 
     private void Start()
     {
+        torchesManager = GetComponentInParent<RPP_ButtonsPuzzleManager>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         flashManager = GetComponent<JUB_FlashManager>();
         //wasUnlit.AddListener(UnlightEverything);
@@ -33,8 +35,9 @@ public class TestTorche : MonoBehaviour
     }
     void Update()
     {
-        if (flashManager.burned)
+        if (flashManager.burned && !hasBeenBurned)
         {
+            hasBeenBurned = true;
             LitTorch();
         }
     }
@@ -44,6 +47,7 @@ public class TestTorche : MonoBehaviour
         //GetComponent<CircleCollider2D>().radius = 2;
         isLit = true;
         spriteRenderer.sprite = litTorch;
+        torchesManager.buttonsActive++;
         Debug.Log("torche allumée");
     }
 

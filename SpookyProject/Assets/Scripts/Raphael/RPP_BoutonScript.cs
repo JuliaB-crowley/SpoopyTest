@@ -7,34 +7,38 @@ public class RPP_BoutonScript : MonoBehaviour
     [SerializeField] SpriteRenderer spriteRenderer; // Je modifie le sprite pour avoir du feedback visuel  
     [SerializeField] JUB_FlashManager flashManager; //flash manager à mettre sur layer flashable
     [SerializeField] Sprite boutonActivé, boutonDésactivé; //différents sprites du bouton
-    public bool buttonIsActive = false;
+    [SerializeField] RPP_ButtonsPuzzleManager buttonsManager;
+
+    public bool hasBeenFlashed = false;
 
     void Start()
     {
+        buttonsManager = GetComponentInParent<RPP_ButtonsPuzzleManager>();
         spriteRenderer =GetComponent<SpriteRenderer>();
         flashManager = GetComponentInChildren<JUB_FlashManager>();
+        spriteRenderer.sprite = boutonDésactivé;
+    }
 
-        if (!buttonIsActive)
+    void Update()
+    {
+        if (flashManager.flashed && !hasBeenFlashed && !buttonsManager.puzzleSolved)
         {
-            spriteRenderer.sprite = boutonDésactivé;
+            StartCoroutine(ActivateButton());
         }
-        else
+        if (buttonsManager.puzzleSolved)
         {
             spriteRenderer.sprite = boutonActivé;
         }
     }
 
-    void Update()
+    IEnumerator ActivateButton()
     {
-        if (flashManager.flashed)
-        {
-            spriteRenderer.sprite = boutonActivé;
-            buttonIsActive = true;
-        }
-        else
-        {
-            spriteRenderer.sprite = boutonDésactivé;
-            buttonIsActive = false;
-        }
+        spriteRenderer.sprite = boutonActivé;
+        hasBeenFlashed = true;
+        buttonsManager.buttonsActive++;
+        yield return new WaitForSeconds(flashManager.flashTime);
+        spriteRenderer.sprite = boutonDésactivé;
+        hasBeenFlashed = false;
+        buttonsManager.buttonsActive--;
     }
 }
