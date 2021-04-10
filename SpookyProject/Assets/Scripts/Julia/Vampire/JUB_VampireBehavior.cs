@@ -33,6 +33,16 @@ public class JUB_VampireBehavior : MonoBehaviour
     public float securityThreshold, fleeDistance, fleeSpeed;
     public bool isEscaping;
 
+    //attack elements
+    public GameObject batPrefab;
+    public float buildupTime, recoveryTime;
+
+    //stun elements
+    public float stunTime;
+    public JUB_FlashManager flashManager;
+    public bool hasBeenStunned;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -40,6 +50,7 @@ public class JUB_VampireBehavior : MonoBehaviour
         SMBanimator = GetComponent<Animator>();
         pathfinder = GetComponent<AIPath>();
         destinationSetter = GetComponent<AIDestinationSetter>();
+        flashManager = GetComponentInChildren<JUB_FlashManager>();
 
         SMBanimator.GetBehaviour<VampireSMB_Idle>().vampire = this;
         SMBanimator.GetBehaviour<VampireSMB_Attack>().vampire = this;
@@ -62,9 +73,15 @@ public class JUB_VampireBehavior : MonoBehaviour
 
         }
 
-        if((distanceFromPlayer.magnitude < securityThreshold) && !isEscaping)
+        if((distanceFromPlayer.magnitude < securityThreshold) && !isEscaping && !hasBeenStunned)
         {
             SMBanimator.Play("Escape");
+        }
+
+        if(flashManager.flashed && !hasBeenStunned)
+        {
+            hasBeenStunned = true;
+            SMBanimator.Play("Stun");
         }
     }
 

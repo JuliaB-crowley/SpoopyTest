@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vampire: {fileID: 0}
+  timeSincePause: 0
 --- !u!1102 &-3145654977985403358
 AnimatorState:
   serializedVersion: 6

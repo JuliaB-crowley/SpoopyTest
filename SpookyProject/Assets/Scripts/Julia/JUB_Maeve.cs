@@ -161,7 +161,7 @@ namespace character
             collisionTop = top.isCollision;
             collisionBottom = bottom.isCollision;
 
-            if (!isInRecoil)
+            if (!isInRecoil && !isFlashing)
             {
                 currentSpeed.x = Mathf.SmoothDamp(currentSpeed.x, targetSpeed.x, ref xVelocity, accelerationTime);
                 currentSpeed.y = Mathf.SmoothDamp(currentSpeed.y, targetSpeed.y, ref yVelocity, accelerationTime);
@@ -184,8 +184,15 @@ namespace character
             {
                 currentSpeed.y = 0;
             }
+            if(!isFlashing)
+            {
+                rigidBody.velocity = currentSpeed;
 
-            rigidBody.velocity = currentSpeed;
+            }
+            else
+            {
+                rigidBody.velocity = Vector2.zero;
+            }
 
         }
 
@@ -293,9 +300,13 @@ namespace character
                         //Debug.Log("Additional Angle = " + additionalAngle + " / AA+AtkAngle = " + totalAngle + " / Ennemy Angle = " + ennemyAngle);
                         if (ennemyAngle <= totalAngle)
                         {
-                            ennemy.GetComponent<JUB_EnnemyDamage>().TakeDamage(attackProfile.atkDamage);
-                            Debug.Log("attack was performed");
-                            ennemiesHitLastTime.Add(ennemy);
+                            if (ennemy.GetComponent<JUB_EnnemyDamage>())
+                            {
+                                ennemy.GetComponent<JUB_EnnemyDamage>().TakeDamage(attackProfile.atkDamage);
+                                Debug.Log("attack was performed");
+                                ennemiesHitLastTime.Add(ennemy);
+
+                            }
 
                         }
                     }
