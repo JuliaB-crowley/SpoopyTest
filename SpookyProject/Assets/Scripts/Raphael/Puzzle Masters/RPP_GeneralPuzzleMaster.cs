@@ -5,4 +5,5 @@ using UnityEngine;
 public class RPP_GeneralPuzzleMaster : MonoBehaviour
 {
     public int puzzlesSolved = 0;
+    public bool hasBlueKey = false, hasYellowKey = false, hasGreenKey = false, hasVioletKey = false;
 }
