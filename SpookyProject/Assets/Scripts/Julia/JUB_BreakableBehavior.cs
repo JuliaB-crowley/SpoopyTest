@@ -5,23 +5,21 @@ using UnityEngine;
 public class JUB_BreakableBehavior : MonoBehaviour
 {
     public List<GameObject> possibleLoots;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public float breakTime;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    void Breaking()
+    public void Breaking()
     {
         if(possibleLoots.Count > 0)
         {
-
+            int index = Random.Range(0, possibleLoots.Count - 1);
+            Instantiate(possibleLoots[index], transform.position, Quaternion.identity);
         }
+        StartCoroutine("DestroyCoroutine");
+    }
+
+    IEnumerator DestroyCoroutine()
+    {
+        yield return new WaitForSeconds(breakTime);
+        Destroy(gameObject);
     }
 }

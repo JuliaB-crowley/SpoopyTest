@@ -316,7 +316,7 @@ namespace character
 
             foreach (Collider2D breakableObject in hitObjects)
             {
-
+                breakableObject.GetComponent<JUB_BreakableBehavior>().Breaking();
             }
 
             yield return new WaitForSeconds(attackProfile.atkRecover);

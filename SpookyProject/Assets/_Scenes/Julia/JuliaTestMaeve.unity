@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 140117960}
   - component: {fileID: 140117959}
   m_Layer: 8
-  m_Name: Sphere
+  m_Name: Pot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
