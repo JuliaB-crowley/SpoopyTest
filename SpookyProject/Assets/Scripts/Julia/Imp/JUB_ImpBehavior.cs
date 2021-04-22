@@ -46,6 +46,7 @@ public class JUB_ImpBehavior : MonoBehaviour
         instantiationTime = (sprintDistance / sprintSpeed)/7;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<JUB_Maeve>();
+        flashManager = GetComponentInChildren<JUB_FlashManager>();
         SMBanimator = GetComponent<Animator>();
         pathfinder = GetComponent<AIPath>();
         destinationSetter = GetComponent<AIDestinationSetter>();
