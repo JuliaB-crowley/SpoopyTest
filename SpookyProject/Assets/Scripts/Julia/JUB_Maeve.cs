@@ -60,6 +60,7 @@ namespace character
             rigidBody = GetComponent<Rigidbody2D>();
             controller = new Controller();
             controller.Enable();
+            displayBonbons.text = currentBonbons.ToString();
 
             AttackProfile quickAttack = new AttackProfile(1, new Vector2(1, 1), 0.1f, 0.2f, "quick");
             AttackProfile heavyAttack = new AttackProfile(3, new Vector2(2, 1), 0, 0.8f, "heavy");
@@ -161,7 +162,7 @@ namespace character
             collisionTop = top.isCollision;
             collisionBottom = bottom.isCollision;
 
-            if (!isInRecoil)
+            if (!isInRecoil && !isFlashing)
             {
                 currentSpeed.x = Mathf.SmoothDamp(currentSpeed.x, targetSpeed.x, ref xVelocity, accelerationTime);
                 currentSpeed.y = Mathf.SmoothDamp(currentSpeed.y, targetSpeed.y, ref yVelocity, accelerationTime);
@@ -184,8 +185,15 @@ namespace character
             {
                 currentSpeed.y = 0;
             }
+            if(!isFlashing)
+            {
+                rigidBody.velocity = currentSpeed;
 
-            rigidBody.velocity = currentSpeed;
+            }
+            else
+            {
+                rigidBody.velocity = Vector2.zero;
+            }
 
         }
 
@@ -293,9 +301,13 @@ namespace character
                         //Debug.Log("Additional Angle = " + additionalAngle + " / AA+AtkAngle = " + totalAngle + " / Ennemy Angle = " + ennemyAngle);
                         if (ennemyAngle <= totalAngle)
                         {
-                            ennemy.GetComponent<JUB_EnnemyDamage>().TakeDamage(attackProfile.atkDamage);
-                            Debug.Log("attack was performed");
-                            ennemiesHitLastTime.Add(ennemy);
+                            if (ennemy.GetComponent<JUB_EnnemyDamage>())
+                            {
+                                ennemy.GetComponent<JUB_EnnemyDamage>().TakeDamage(attackProfile.atkDamage);
+                                Debug.Log("attack was performed");
+                                ennemiesHitLastTime.Add(ennemy);
+
+                            }
 
                         }
                     }
@@ -305,7 +317,7 @@ namespace character
 
             foreach (Collider2D breakableObject in hitObjects)
             {
-
+                breakableObject.GetComponent<JUB_BreakableBehavior>().Breaking();
             }
 
             yield return new WaitForSeconds(attackProfile.atkRecover);
@@ -502,7 +514,7 @@ namespace character
         public void MaxUpgrades(int upgrade)
         {
             maxLife += upgrade;
-            currentLife += upgrade;
+            currentLife += maxLife;
         }
 
         void Die()
@@ -512,24 +524,35 @@ namespace character
             //respawn checkpoint
         }
 
+        public void GainBonbons(int bonbons)
+        {
+            currentBonbons += bonbons;
+            displayBonbons.text = currentBonbons.ToString();
+        }
+
+        public void Achat(int price)
+        {
+            currentBonbons -= price;
+            displayBonbons.text = currentBonbons.ToString();
+        }
+
        private void OnTriggerEnter2D(Collider2D collision)
         {
             if (collision.CompareTag("Heal"))
             {
-                currentLife += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
+                Heal(collision.GetComponent<RPP_CollectibleScript>().collectibleValeur);
                 collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
 
             if (collision.CompareTag("HealthBoost"))
             {
-                maxLife += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
-                currentLife = maxLife;
+                MaxUpgrades(collision.GetComponent<RPP_CollectibleScript>().collectibleValeur);
                 collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
 
             if (collision.CompareTag("Bonbon"))
             {
-                currentBonbons += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
+                GainBonbons(collision.GetComponent<RPP_CollectibleScript>().collectibleValeur);
                 collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
 

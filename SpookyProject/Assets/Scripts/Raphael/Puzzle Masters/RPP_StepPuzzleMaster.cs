@@ -9,11 +9,11 @@ public class RPP_StepPuzzleMaster : MonoBehaviour
     public int currentSteps = 0; // Combien de dalles le joueur à marché
     public int correctSteps = 0; // Combien de dalles correctes le joueur à marché
     public bool playesIsPresent = false, playerHasFailed = false, playerHasSucceeded = false, puzzleHasBeenCompleted = false; // des bools qui checkent la progréssion du joueur dans le niveau
-    [SerializeField] RPP_PuzzleMaster puzzleMaster;
+    [SerializeField] RPP_GeneralPuzzleMaster puzzleMaster;
 
     private void Start()
     {
-        puzzleMaster = GameObject.FindGameObjectWithTag("Puzzle Master").GetComponent<RPP_PuzzleMaster>();
+        puzzleMaster = GameObject.FindGameObjectWithTag("Puzzle Master").GetComponent<RPP_GeneralPuzzleMaster>();
     }
 
     void Update()

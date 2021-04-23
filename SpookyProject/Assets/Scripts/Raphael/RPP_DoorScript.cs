@@ -5,46 +5,166 @@ using UnityEngine;
 public class RPP_DoorScript : MonoBehaviour
 {
     public JUB_InteractibleBehavior doorManager;
-    public RPP_RoomMasterScript roomMaster;
+    //public RPP_RoomMasterScript roomMaster;
     public GameObject doorObject;
     public int minPuzzlesSolved;
-    [SerializeField] RPP_PuzzleMaster puzzleMaster;
-    public GameObject doorBlock;
+    [SerializeField] RPP_GeneralPuzzleMaster puzzleMaster;
+    public SpriteRenderer doorSprite;
+    public Sprite doorOpen, doorLocked, blueDoor, yellowDoor, greenDoor, violetDoor, brokenDoor;
+    public bool needBlueKey, needYellowKey, needGreenKey, needVioletKey, doorIsBroken;
 
     void Start()
     {
-        puzzleMaster = GameObject.FindGameObjectWithTag("Puzzle Master").GetComponent<RPP_PuzzleMaster>();
-        roomMaster = this.GetComponentInParent<RPP_RoomMasterScript>();
+        doorSprite = GetComponentInChildren<SpriteRenderer>();
+        puzzleMaster = GameObject.FindGameObjectWithTag("Puzzle Master").GetComponent<RPP_GeneralPuzzleMaster>();
+        //roomMaster = this.GetComponentInParent<RPP_RoomMasterScript>();
         doorManager = this.GetComponent<JUB_InteractibleBehavior>();
+        if (needBlueKey)
+        {
+            doorSprite.sprite = blueDoor;
+        }
+        else if (needYellowKey)
+        {
+            doorSprite.sprite = yellowDoor;
+        }
+        else if (needGreenKey)
+        {
+            doorSprite.sprite = greenDoor;
+        }
+        else if (needVioletKey)
+        {
+            doorSprite.sprite = violetDoor;
+        }
+        else if (doorIsBroken)
+        {
+            doorSprite.sprite = brokenDoor;
+        }
     }
 
     void Update()
     {
-        if (minPuzzlesSolved <= puzzleMaster.puzzlesSolved)
+        if (!doorIsBroken)
         {
-            Debug.Log("The player has solved a puzzle");
-            doorBlock.SetActive(false);
-            if (!roomMaster.playerIsPresent)
+            if (!needBlueKey && !needYellowKey && !needGreenKey && !needVioletKey)
             {
-                doorObject.SetActive(false);
-                doorManager.interacted = false;
+                if (minPuzzlesSolved <= puzzleMaster.puzzlesSolved)
+                {
+                    doorSprite.sprite = doorOpen;
+
+                    if (!doorManager.interacted)
+                    {
+                        doorObject.SetActive(true);
+                    }
+                    else
+                    {
+                        doorObject.SetActive(false);
+                    }
+                }
+                else
+                {
+                    doorObject.SetActive(true);
+                    doorManager.interacted = false;
+                    doorSprite.sprite = doorLocked;
+                    Debug.Log("The player has to solve a puzzle");
+                }
             }
 
-            if (roomMaster.playerIsPresent && !doorManager.interacted)
-            {
-                doorObject.SetActive(true);
-            }
             else
             {
-                doorObject.SetActive(false);
+                if (needBlueKey)
+                {
+                    if (!puzzleMaster.hasBlueKey)
+                    {
+                        doorObject.SetActive(true);
+                        doorManager.interacted = false;
+                    }
+                    else
+                    {
+                        doorSprite.sprite = doorOpen;
+
+                        if (!doorManager.interacted)
+                        {
+                            doorObject.SetActive(true);
+                        }
+                        else
+                        {
+                            doorObject.SetActive(false);
+                        }
+                    }
+                }
+
+                if (needYellowKey)
+                {
+                    if (!puzzleMaster.hasYellowKey)
+                    {
+                        doorObject.SetActive(true);
+                        doorManager.interacted = false;
+                    }
+                    else
+                    {
+                        doorSprite.sprite = doorOpen;
+
+                        if (!doorManager.interacted)
+                        {
+                            doorObject.SetActive(true);
+                        }
+                        else
+                        {
+                            doorObject.SetActive(false);
+                        }
+                    }
+                }
+
+                if (needGreenKey)
+                {
+                    if (!puzzleMaster.hasGreenKey)
+                    {
+                        doorObject.SetActive(true);
+                        doorManager.interacted = false;
+                    }
+                    else
+                    {
+                        doorSprite.sprite = doorOpen;
+
+                        if (!doorManager.interacted)
+                        {
+                            doorObject.SetActive(true);
+                        }
+                        else
+                        {
+                            doorObject.SetActive(false);
+                        }
+                    }
+
+                }
+
+                if (needVioletKey)
+                {
+                    if (!puzzleMaster.hasVioletKey)
+                    {
+                        doorObject.SetActive(true);
+                        doorManager.interacted = false;
+                    }
+                    else
+                    {
+                        doorSprite.sprite = doorOpen;
+
+                        if (!doorManager.interacted)
+                        {
+                            doorObject.SetActive(true);
+                        }
+                        else
+                        {
+                            doorObject.SetActive(false);
+                        }
+                    }
+                }
             }
         }
         else
         {
             doorObject.SetActive(true);
             doorManager.interacted = false;
-            doorBlock.SetActive(true);
-            Debug.Log("The player has to solve a puzzle");
-        }       
+        }
     }
 }

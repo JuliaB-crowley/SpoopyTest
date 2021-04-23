@@ -35,12 +35,18 @@ public class JUB_ImpBehavior : MonoBehaviour
     //pause elements
     public float pauseTime;
 
+    //stun elements
+    public float stunTime;
+    public JUB_FlashManager flashManager;
+    public bool hasBeenStunned;
+
     // Start is called before the first frame update
     void Start()
     {
         instantiationTime = (sprintDistance / sprintSpeed)/7;
 
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<JUB_Maeve>();
+        flashManager = GetComponentInChildren<JUB_FlashManager>();
         SMBanimator = GetComponent<Animator>();
         pathfinder = GetComponent<AIPath>();
         destinationSetter = GetComponent<AIDestinationSetter>();
@@ -49,6 +55,8 @@ public class JUB_ImpBehavior : MonoBehaviour
         SMBanimator.GetBehaviour<ImpSMB_Pursue>().imp = this;
         SMBanimator.GetBehaviour<ImpSMB_Sprint>().imp = this;
         SMBanimator.GetBehaviour<ImpSMB_Pause>().imp = this;
+
+        SMBanimator.GetBehaviour<ImpSMB_Stun>().imp = this;
     }
 
     // Update is called once per frame
@@ -70,6 +78,11 @@ public class JUB_ImpBehavior : MonoBehaviour
                 MakeDamages();
                 timeSinceInstantiated = 0;
             }
+        }
+        if (flashManager.flashed && !hasBeenStunned)
+        {
+            hasBeenStunned = true;
+            SMBanimator.Play("Stun");
         }
     }
 

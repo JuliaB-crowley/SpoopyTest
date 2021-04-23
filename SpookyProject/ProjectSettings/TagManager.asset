@@ -11,6 +11,8 @@ TagManager:
   - Door
   - Puzzle Master
   - DamageDealer
+  - Torche
+  - Bouton
   layers:
   - Default
   - TransparentFX
@@ -28,7 +30,7 @@ TagManager:
   - Interactible
   - FlashableObjects
   - Zone
-  - 
+  - SpeakingEvent
   - 
   - 
   - 
