@@ -60,6 +60,7 @@ namespace character
             rigidBody = GetComponent<Rigidbody2D>();
             controller = new Controller();
             controller.Enable();
+            displayBonbons.text = currentBonbons.ToString();
 
             AttackProfile quickAttack = new AttackProfile(1, new Vector2(1, 1), 0.1f, 0.2f, "quick");
             AttackProfile heavyAttack = new AttackProfile(3, new Vector2(2, 1), 0, 0.8f, "heavy");
@@ -513,7 +514,7 @@ namespace character
         public void MaxUpgrades(int upgrade)
         {
             maxLife += upgrade;
-            currentLife += upgrade;
+            currentLife += maxLife;
         }
 
         void Die()
@@ -521,6 +522,18 @@ namespace character
             //RIP
             //anim mort
             //respawn checkpoint
+        }
+
+        public void GainBonbons(int bonbons)
+        {
+            currentBonbons += bonbons;
+            displayBonbons.text = currentBonbons.ToString();
+        }
+
+        public void Achat(int price)
+        {
+            currentBonbons -= price;
+            displayBonbons.text = currentBonbons.ToString();
         }
 
        private void OnTriggerEnter2D(Collider2D collision)
@@ -534,13 +547,12 @@ namespace character
             if (collision.CompareTag("HealthBoost"))
             {
                 MaxUpgrades(collision.GetComponent<RPP_CollectibleScript>().collectibleValeur);
-                currentLife = maxLife;
                 collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
 
             if (collision.CompareTag("Bonbon"))
             {
-                currentBonbons += collision.GetComponent<RPP_CollectibleScript>().collectibleValeur;
+                GainBonbons(collision.GetComponent<RPP_CollectibleScript>().collectibleValeur);
                 collision.GetComponent<RPP_CollectibleScript>().collectibleObject.SetActive(false);
             }
 
