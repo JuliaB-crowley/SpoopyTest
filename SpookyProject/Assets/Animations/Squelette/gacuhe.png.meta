@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: c9707570febfd1541901a4156686fdec
+guid: bcc1110c356c62445a11b92fd5f97bae
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4035950170500291060
-    second: "sprite d\xE9placement face_0"
+      213: -401988297714090357
+    second: gacuhe_0
   - first:
-      213: -5093169123065860465
-    second: "sprite d\xE9placement face_1"
+      213: 6012364573649622832
+    second: gacuhe_1
   - first:
-      213: -4050369289477379265
-    second: "sprite d\xE9placement face_2"
+      213: -5505268456561828140
+    second: gacuhe_2
   - first:
-      213: -4948777444049498700
-    second: "sprite d\xE9placement face_3"
+      213: -2250630673133171166
+    second: gacuhe_3
   - first:
-      213: -7975425209329096782
-    second: "sprite d\xE9placement face_4"
+      213: -2184319527566623163
+    second: gacuhe_4
   - first:
-      213: -8620088956713380235
-    second: "sprite d\xE9placement face_5"
+      213: -945147321530541168
+    second: gacuhe_5
   - first:
-      213: -6926765994534225141
-    second: "sprite d\xE9placement face_6"
+      213: -5020873347861268980
+    second: gacuhe_6
   - first:
-      213: 8883086366651749554
-    second: "sprite d\xE9placement face_7"
+      213: 2227566209081809314
+    second: gacuhe_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "sprite d\xE9placement face_0"
+      name: gacuhe_0
       rect:
         serializedVersion: 2
-        x: 78
-        y: 663
-        width: 307
-        height: 520
+        x: 85
+        y: 34
+        width: 300
+        height: 508
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -129,125 +129,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c06272c04bc6df7c0800000000000000
-      internalID: -4035950170500291060
+      spriteID: b8e33e6e5c9db6af0800000000000000
+      internalID: -401988297714090357
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "sprite d\xE9placement face_1"
-      rect:
-        serializedVersion: 2
-        x: 541
-        y: 661
-        width: 311
-        height: 514
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f8eeba6daad6159b0800000000000000
-      internalID: -5093169123065860465
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "sprite d\xE9placement face_2"
-      rect:
-        serializedVersion: 2
-        x: 1004
-        y: 661
-        width: 310
-        height: 517
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: f3bac8b47923ac7c0800000000000000
-      internalID: -4050369289477379265
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "sprite d\xE9placement face_3"
-      rect:
-        serializedVersion: 2
-        x: 1469
-        y: 661
-        width: 309
-        height: 512
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 4bdc6f66229625bb0800000000000000
-      internalID: -4948777444049498700
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "sprite d\xE9placement face_4"
-      rect:
-        serializedVersion: 2
-        x: 1934
-        y: 662
-        width: 306
-        height: 524
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 2b76e391709915190800000000000000
-      internalID: -7975425209329096782
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "sprite d\xE9placement face_5"
-      rect:
-        serializedVersion: 2
-        x: 77
-        y: 44
-        width: 313
-        height: 527
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 576d4dad3ca4f5880800000000000000
-      internalID: -8620088956713380235
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: "sprite d\xE9placement face_6"
+      name: gacuhe_1
       rect:
         serializedVersion: 2
         x: 543
-        y: 48
-        width: 307
-        height: 522
+        y: 34
+        width: 299
+        height: 511
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -255,20 +150,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b0b388d070f2fdf90800000000000000
-      internalID: -6926765994534225141
+      spriteID: 037578099b5307350800000000000000
+      internalID: 6012364573649622832
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "sprite d\xE9placement face_7"
+      name: gacuhe_2
       rect:
         serializedVersion: 2
-        x: 1005
-        y: 47
-        width: 309
-        height: 524
+        x: 999
+        y: 39
+        width: 305
+        height: 506
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,8 +171,113 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b494616cff074b70800000000000000
-      internalID: 8883086366651749554
+      spriteID: 4de1875c18b5993b0800000000000000
+      internalID: -5505268456561828140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gacuhe_3
+      rect:
+        serializedVersion: 2
+        x: 1457
+        y: 39
+        width: 302
+        height: 502
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 22e8c4fb35724c0e0800000000000000
+      internalID: -2250630673133171166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gacuhe_4
+      rect:
+        serializedVersion: 2
+        x: 1909
+        y: 32
+        width: 303
+        height: 513
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 54e317376fcbfa1e0800000000000000
+      internalID: -2184319527566623163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gacuhe_5
+      rect:
+        serializedVersion: 2
+        x: 2365
+        y: 37
+        width: 300
+        height: 506
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 09b92c7c48922e2f0800000000000000
+      internalID: -945147321530541168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gacuhe_6
+      rect:
+        serializedVersion: 2
+        x: 2818
+        y: 41
+        width: 303
+        height: 500
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c06b086ba46425ab0800000000000000
+      internalID: -5020873347861268980
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: gacuhe_7
+      rect:
+        serializedVersion: 2
+        x: 3276
+        y: 37
+        width: 302
+        height: 504
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2a91cfd3aa7e9ee10800000000000000
+      internalID: 2227566209081809314
       vertices: []
       indices: 
       edges: []
@@ -285,7 +285,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: b83c244914c80db409a916145f67ee14
+    spriteID: d68fab50b4e46184f892538d10cde9a1
     internalID: 0
     vertices: []
     indices: 

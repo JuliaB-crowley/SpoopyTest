@@ -1,12 +1,36 @@
 fileFormatVersion: 2
 guid: 66137f3e50bfe7b4eba93cabfae7afc0
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -2161029673337754109
+    second: "sprite d\xE9placement back_0"
+  - first:
+      213: 5936917569578837993
+    second: "sprite d\xE9placement back_1"
+  - first:
+      213: -3978903852942214647
+    second: "sprite d\xE9placement back_2"
+  - first:
+      213: 622040594013219943
+    second: "sprite d\xE9placement back_3"
+  - first:
+      213: -285869560467772420
+    second: "sprite d\xE9placement back_4"
+  - first:
+      213: 8708808404262071712
+    second: "sprite d\xE9placement back_5"
+  - first:
+      213: -7059194128239275526
+    second: "sprite d\xE9placement back_6"
+  - first:
+      213: 4358499473436365594
+    second: "sprite d\xE9placement back_7"
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
     mipMapMode: 0
-    enableMipMap: 1
+    enableMipMap: 0
     sRGBTexture: 1
     linearTexture: 0
     fadeOut: 0
@@ -32,27 +56,27 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
-    wrapU: -1
-    wrapV: -1
+    wrapU: 1
+    wrapV: 1
     wrapW: -1
-  nPOTScale: 1
+  nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 0
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
-  alphaIsTransparency: 0
+  alphaIsTransparency: 1
   spriteTessellationDetail: -1
-  textureType: 0
+  textureType: 8
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
@@ -68,7 +92,19 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -77,11 +113,179 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: "sprite d\xE9placement back_0"
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 710
+        width: 306
+        height: 515
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 30eef9336fa7202e0800000000000000
+      internalID: -2161029673337754109
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "sprite d\xE9placement back_1"
+      rect:
+        serializedVersion: 2
+        x: 638
+        y: 725
+        width: 312
+        height: 503
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9e7a58b031b246250800000000000000
+      internalID: 5936917569578837993
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "sprite d\xE9placement back_2"
+      rect:
+        serializedVersion: 2
+        x: 1158
+        y: 709
+        width: 305
+        height: 516
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90a32f1e60818c8c0800000000000000
+      internalID: -3978903852942214647
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "sprite d\xE9placement back_3"
+      rect:
+        serializedVersion: 2
+        x: 1684
+        y: 721
+        width: 308
+        height: 504
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76ce702ef9ee1a800800000000000000
+      internalID: 622040594013219943
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "sprite d\xE9placement back_4"
+      rect:
+        serializedVersion: 2
+        x: 2202
+        y: 711
+        width: 307
+        height: 515
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cfba83c3623680cf0800000000000000
+      internalID: -285869560467772420
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "sprite d\xE9placement back_5"
+      rect:
+        serializedVersion: 2
+        x: 113
+        y: 60
+        width: 310
+        height: 496
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ad2af83a17ebd870800000000000000
+      internalID: 8708808404262071712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "sprite d\xE9placement back_6"
+      rect:
+        serializedVersion: 2
+        x: 635
+        y: 45
+        width: 309
+        height: 513
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af156c17754b80e90800000000000000
+      internalID: -7059194128239275526
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "sprite d\xE9placement back_7"
+      rect:
+        serializedVersion: 2
+        x: 1158
+        y: 52
+        width: 309
+        height: 507
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a13d6e3cd208c7c30800000000000000
+      internalID: 4358499473436365594
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 9a24628fe4439de4b9506f0a3f7a1a4e
     internalID: 0
     vertices: []
     indices: 

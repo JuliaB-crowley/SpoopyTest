@@ -1,31 +1,31 @@
 fileFormatVersion: 2
-guid: c9707570febfd1541901a4156686fdec
+guid: de1131d02f32ad041bbf14489c6a89bb
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -4035950170500291060
-    second: "sprite d\xE9placement face_0"
+      213: 7552595521408783425
+    second: droite_0
   - first:
-      213: -5093169123065860465
-    second: "sprite d\xE9placement face_1"
+      213: 5719396429797194318
+    second: droite_1
   - first:
-      213: -4050369289477379265
-    second: "sprite d\xE9placement face_2"
+      213: -9115414047275688184
+    second: droite_2
   - first:
-      213: -4948777444049498700
-    second: "sprite d\xE9placement face_3"
+      213: 1302547126884026439
+    second: droite_3
   - first:
-      213: -7975425209329096782
-    second: "sprite d\xE9placement face_4"
+      213: 2077708404492381983
+    second: droite_4
   - first:
-      213: -8620088956713380235
-    second: "sprite d\xE9placement face_5"
+      213: -5564256959553918948
+    second: droite_5
   - first:
-      213: -6926765994534225141
-    second: "sprite d\xE9placement face_6"
+      213: -4758736708281560266
+    second: droite_6
   - first:
-      213: 8883086366651749554
-    second: "sprite d\xE9placement face_7"
+      213: 6312461903634665343
+    second: droite_7
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -115,13 +115,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "sprite d\xE9placement face_0"
+      name: droite_0
       rect:
         serializedVersion: 2
-        x: 78
-        y: 663
-        width: 307
-        height: 520
+        x: 54
+        y: 0
+        width: 363
+        height: 606
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -129,20 +129,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c06272c04bc6df7c0800000000000000
-      internalID: -4035950170500291060
+      spriteID: 144d6c18c9530d860800000000000000
+      internalID: 7552595521408783425
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "sprite d\xE9placement face_1"
+      name: droite_1
       rect:
         serializedVersion: 2
-        x: 541
-        y: 661
-        width: 311
-        height: 514
+        x: 551
+        y: 0
+        width: 364
+        height: 606
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -150,20 +150,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f8eeba6daad6159b0800000000000000
-      internalID: -5093169123065860465
+      spriteID: e4af2bf00c06f5f40800000000000000
+      internalID: 5719396429797194318
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "sprite d\xE9placement face_2"
+      name: droite_2
       rect:
         serializedVersion: 2
-        x: 1004
-        y: 661
-        width: 310
-        height: 517
+        x: 1053
+        y: 0
+        width: 362
+        height: 606
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -171,20 +171,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f3bac8b47923ac7c0800000000000000
-      internalID: -4050369289477379265
+      spriteID: 80fd683383b8f7180800000000000000
+      internalID: -9115414047275688184
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "sprite d\xE9placement face_3"
+      name: droite_3
       rect:
         serializedVersion: 2
-        x: 1469
-        y: 661
-        width: 309
-        height: 512
+        x: 1542
+        y: 0
+        width: 364
+        height: 606
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -192,20 +192,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4bdc6f66229625bb0800000000000000
-      internalID: -4948777444049498700
+      spriteID: 748c021f5b3931210800000000000000
+      internalID: 1302547126884026439
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "sprite d\xE9placement face_4"
+      name: droite_4
       rect:
         serializedVersion: 2
-        x: 1934
-        y: 662
-        width: 306
-        height: 524
+        x: 2045
+        y: 0
+        width: 364
+        height: 606
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -213,20 +213,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b76e391709915190800000000000000
-      internalID: -7975425209329096782
+      spriteID: f1fac9429c085dc10800000000000000
+      internalID: 2077708404492381983
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "sprite d\xE9placement face_5"
+      name: droite_5
       rect:
         serializedVersion: 2
-        x: 77
-        y: 44
-        width: 313
-        height: 527
+        x: 2530
+        y: 0
+        width: 365
+        height: 606
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -234,20 +234,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 576d4dad3ca4f5880800000000000000
-      internalID: -8620088956713380235
+      spriteID: c182bc6a6c9c7c2b0800000000000000
+      internalID: -5564256959553918948
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "sprite d\xE9placement face_6"
+      name: droite_6
       rect:
         serializedVersion: 2
-        x: 543
-        y: 48
-        width: 307
-        height: 522
+        x: 3025
+        y: 0
+        width: 365
+        height: 606
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -255,20 +255,20 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b0b388d070f2fdf90800000000000000
-      internalID: -6926765994534225141
+      spriteID: 633144b3d2295fdb0800000000000000
+      internalID: -4758736708281560266
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "sprite d\xE9placement face_7"
+      name: droite_7
       rect:
         serializedVersion: 2
-        x: 1005
-        y: 47
-        width: 309
-        height: 524
+        x: 3524
+        y: 0
+        width: 364
+        height: 606
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -276,8 +276,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2b494616cff074b70800000000000000
-      internalID: 8883086366651749554
+      spriteID: f7f845018ae5a9750800000000000000
+      internalID: 6312461903634665343
       vertices: []
       indices: 
       edges: []
@@ -285,7 +285,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: b83c244914c80db409a916145f67ee14
+    spriteID: 79f0d29b9f7fd434293619a0f169f103
     internalID: 0
     vertices: []
     indices: 
